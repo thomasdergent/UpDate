@@ -1,0 +1,42 @@
+<div class="container p-5">
+    <div class="d-flex justify-content-center">
+        <div class="user_card">
+            <div class="d-flex justify-content-center">
+                
+                <h1>Login</h1>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+
+                <form (ngSubmit)="onSubmit()">
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" [(ngModel)]="userLogin.userName" name="userName" placeholder="userName"/>
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" [(ngModel)]="userLogin.password" name="password" placeholder="password"/>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <button type="submit" [disabled]="submitted" class="btn login_btn">Login</button>
+                    </div>
+                </form>
+
+            </div>
+            
+            <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                    Nog geen account? <a href="/sign-up" class="ml-2"> Account aanmaken!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+<div *ngIf="wrong" class="alert alert-danger" role="alert">
+    <h2>Oh oh!</h2> <p>Je gebruikersnaam of wachtwoord was fout. probeer nog eens.</p>
+</div>    
