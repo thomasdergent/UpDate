@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddarticleComponent } from './addarticle/addarticle.component';
-import { RouterModule } from '@angular/router';
+import { JournalistCRUDComponent } from './journalist-crud/journalist-crud.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 
+
+
+
 @NgModule({
-  declarations: [AddarticleComponent],
+  declarations: [JournalistCRUDComponent],
   imports: [
-    CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    CommonModule
   ]
 })
-export class AddarticleModule { }
+export class JournalistCRUDModule { }

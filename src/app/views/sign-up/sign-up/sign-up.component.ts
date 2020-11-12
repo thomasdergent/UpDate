@@ -21,6 +21,7 @@ export class SignUpComponent implements OnInit {
     this.submitted = true;
     
     this._userService.addUser(this.user).subscribe();
+    localStorage.setItem("testuser", JSON.stringify(this.user));
     this.router.navigate(['/']);
   }
 

@@ -9,6 +9,8 @@ import {LoginModule} from '../views/login/login.module';
 import {AdministratorModule} from '../views/administrator/administrator.module';
 import {ArticleModule} from '../views/article/article.module';
 import {AddarticleModule} from '../views/addarticle/addarticle.module';
+import {AdminDashboardModule} from '../views/admin-dashboard/admin-dashboard.module'
+import {JournalistCRUDModule} from '../views/journalist-crud/journalist-crud.module'
 
 
 
@@ -25,7 +27,9 @@ import {AddarticleModule} from '../views/addarticle/addarticle.module';
     LoginModule,
     AdministratorModule,
     ArticleModule,
-    AddarticleModule
+    AddarticleModule,
+    AdminDashboardModule,
+    JournalistCRUDModule,
   ]
 })
 export class SharedModule { }

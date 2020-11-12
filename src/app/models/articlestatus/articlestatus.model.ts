@@ -4,6 +4,5 @@ export class Articlestatus {
     constructor(
     public articleSatusID: number,
     public name: string,
-    public articles: Article[]
     ){}
 }

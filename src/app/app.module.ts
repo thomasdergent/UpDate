@@ -9,6 +9,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginInterceptor } from './views/login/login.interceptor';
 
 import { SharedModule } from './shared/shared.module';
+import { AddarticleModule } from './views/addarticle/addarticle.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    AddarticleModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

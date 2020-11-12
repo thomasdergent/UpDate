@@ -1,11 +1,14 @@
 <p>Add Article</p>
 
-<button class="btn btn-success" routerLink="/addArticle">Add</button>
+<button routerLink="/addArticle/">Add</button>
 
 <div class="row">
     <div *ngFor="let article of articles" class="col-6 p-2">
       <div class="card">
         <h5 class="card-header">{{article.title}}</h5>
+        <p class="card-header">{{article.subTitle}}</p>
+        <p class="card-header">{{article.shortSummary}}</p>
+        <p class="card-header">{{article.body}}</p>
       </div>
     </div>
   </div>

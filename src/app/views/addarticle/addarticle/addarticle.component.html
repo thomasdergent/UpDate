@@ -1,1 +1,36 @@
-<p>addarticle works!</p>
+<form>
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <span class="input-group-text"></span>
+        </div>
+        <input type="text" [(ngModel)]="article.title" name="title" placeholder="title" />
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <span class="input-group-text"></span>
+        </div>
+        <input type="text" [(ngModel)]="article.subTitle" name="subTitle" placeholder="subTitle" />
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <span class="input-group-text"></span>
+        </div>
+        <input type="text" [(ngModel)]="article.shortSummary" name="shortSummary" placeholder="shortSummary" />
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <span class="input-group-text"></span>
+        </div>
+        <input type="text" [(ngModel)]="article.body" name="body" placeholder="body" />
+    </div>
+    <div class="d-flex justify-content-center mt-3 login_container">
+    </div>
+    <div class="input-group">
+        <select class="custom-select" id="tags" [(ngModel)]="selectedTag" name="tags">
+            <option selected value="start">-- Tags --</option>
+            <option *ngFor="let tag of tags" [ngValue]="tag.tagID">{{tag.name}}</option>
+        </select>
+    </div>
+    <button class="btn btn-outline-secondary" type="submit" (click)="addArticleDraft()">Opslagen</button>
+    <button class="btn btn-outline-secondary" type="submit" (click)="addArticleToReview()">Inzenden</button>
+</form>

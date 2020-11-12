@@ -7,6 +7,8 @@ import { LoginComponent } from './views/login/login/login.component';
 import { ArticleComponent } from './views/article/article/article.component';
 import { AdministratorComponent } from './views/administrator/administrator/administrator.component';
 import { AddarticleComponent } from './views/addarticle/addarticle/addarticle.component';
+import {AdminDashboardComponent} from './views/admin-dashboard/admin-dashboard/admin-dashboard.component'
+import {JournalistCRUDComponent} from './views/journalist-crud/journalist-crud/journalist-crud.component'
 
 import {AdminGuard} from './guards/admin/admin.guard'
 import {JournalistGuard} from './guards/journalist/journalist.guard'
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'article', component: ArticleComponent },
   { path: 'administrator', component: AdministratorComponent, canActivate: [AdminGuard]},
   { path: 'addArticle', component: AddarticleComponent},
+  { path: 'admin/dashboard', component: AdminDashboardComponent},
+  { path: 'admin/dashboard/journalistcrud', component: JournalistCRUDComponent},
 ];
 
 @NgModule({
