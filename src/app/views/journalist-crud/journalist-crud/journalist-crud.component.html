@@ -110,7 +110,7 @@
 				<form ngNativeValidate (ngSubmit)="onSubmitEditJournalist()">
 					<div class="modal-header">
 						<h4 class="modal-title">Bewerk {{currentJournalist.userName}}</h4>
-						<button type="button" class="close" data-dismiss="modal" (click)="close()">&times;</button>
+						<button type="button" class="close" data-dismiss="modal" (click)="closeEdit()">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
@@ -141,7 +141,7 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
-							(click)="close()">
+							(click)="closeEdit()">
 						<input type="submit" class="btn btn-success" value="Wijzig">
 					</div>
 				</form>
@@ -158,7 +158,7 @@
 						<h4 class="modal-title">Verwijder {{currentJournalist.firstName}}
 							{{currentJournalist.firstName}}?</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-							(click)="close()">&times;</button>
+							(click)="closeDelete()">&times;</button>
 					</div>
 					<div class="modal-body">
 						<p>Zeker dat je deze journalist wilt verwijderen?</p>
@@ -166,7 +166,7 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
-							(click)="close()">
+							(click)="closeDelete()">
 						<input type="submit" class="btn btn-danger" value="Delete">
 					</div>
 				</form>

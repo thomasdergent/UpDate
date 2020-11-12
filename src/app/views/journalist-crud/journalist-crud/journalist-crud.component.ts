@@ -51,6 +51,18 @@ export class JournalistCRUDComponent implements OnInit {
     modal.classList.add('hidden')
   }
 
+  closeEdit() {
+    let modal = document.getElementById('editEmployeeModal')
+    modal.classList.remove('show')
+    modal.classList.add('hidden')
+  }
+
+  closeDelete() {
+    let modal = document.getElementById('deleteEmployeeModal')
+    modal.classList.remove('show')
+    modal.classList.add('hidden')
+  }
+
   onSubmit() {
     this.submitted = true;
     
@@ -87,6 +99,9 @@ export class JournalistCRUDComponent implements OnInit {
 
       this._userService.updateUser(this.currentJournalist.userID, this.currentJournalist).subscribe();
 
+      let modal = document.getElementById('editEmployeeModal')
+      modal.classList.remove('show')
+      modal.classList.add('hidden')
     }
 
 
