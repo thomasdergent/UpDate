@@ -9,6 +9,7 @@ import { AdministratorComponent } from './views/administrator/administrator/admi
 import { AddarticleComponent } from './views/addarticle/addarticle/addarticle.component';
 import {AdminDashboardComponent} from './views/admin-dashboard/admin-dashboard/admin-dashboard.component'
 import {JournalistCRUDComponent} from './views/journalist-crud/journalist-crud/journalist-crud.component'
+import {ManageTagsComponent} from './views/manage-tags/manage-tags/manage-tags.component'
 
 import {AdminGuard} from './guards/admin/admin.guard'
 import {JournalistGuard} from './guards/journalist/journalist.guard'
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'addArticle', component: AddarticleComponent},
   { path: 'admin/dashboard', component: AdminDashboardComponent},
   { path: 'admin/dashboard/journalistcrud', component: JournalistCRUDComponent},
+  { path: 'admin/dashboard/tags', component: ManageTagsComponent},
 ];
 
 @NgModule({

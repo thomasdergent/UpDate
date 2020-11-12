@@ -33,7 +33,12 @@ export class ArticleComponent implements OnInit {
   getArticlesOfUserID(userId: number) {
     this._articleService.getArticlesByUserID(userId).subscribe(
       result => {
-        this.articles = result;
+        //Slice betekent de laatste 5 items van de array, dus laatste 5 artikels (nieuwste)
+        this.articles = result.slice(-5)
+
+        for(let i = 0; i <result.length; i++){
+
+        }
       }
     )
   }

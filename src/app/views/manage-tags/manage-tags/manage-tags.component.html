@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+<body>
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Categorieën beheren</h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="modal-title" (click)="openAdd()" class="btn btn-success"
+                                data-toggle="modal"><i
+                                    class="material-icons">&#xE147;</i><span>Toevoegen</span></button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nummer</th>
+                            <th>Categorie</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let tag of tags">
+
+                        <tr>
+                            <td>{{tag.tagID}}</td>
+                            <td>{{tag.name}}</td>
+                            <td>
+
+                                <a (click)="editTag(tag.tagID)" class="edit" data-toggle="modal"><i
+                                        class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+                                <a (click)="deleteTag(tag.tagID)" class="delete" data-toggle="modal"><i
+                                        class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add Modal HTML -->
+    <div id="addTag" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form ngNativeValidate (ngSubmit)="onSubmitAdd()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Categorie toevoegen</h4>
+                        <button type="button" class="close" data-dismiss="modal" (click)="closeAdd()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Categorie</label>
+                            <input type="text" [(ngModel)]="tag.name" class="form-control" name="tagName"
+                                placeholder="Categorie" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
+                            (click)="closeAdd()">
+                        <input type="submit" class="btn btn-success" value="Add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal HTML -->
+    <div id="editTag" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form ngNativeValidate (ngSubmit)="onSubmitEditTag()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Bewerk {{currentTag.name}}</h4>
+                        <button type="button" class="close" data-dismiss="modal" (click)="closeEdit()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Categorie: {{currentTag.name}}</label>
+                            <input type="text" [(ngModel)]="currentTag.name" class="form-control" name="userName"
+                                required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
+                            (click)="closeEdit()">
+                        <input type="submit" class="btn btn-success" value="Wijzig">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal HTML -->
+    <div id="deleteTag" class="modal fade">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <form (ngSubmit)="onSubmitDeleteTag()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Verwijder {{currentTag.name}} ?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                            (click)="closeDelete()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Zeker dat je deze categorie wilt verwijderen?</p>
+                        <p class="text-warning"><small>Deze actie kan niet ongedaan worden gemaakt!</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
+                            (click)="closeDelete()">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

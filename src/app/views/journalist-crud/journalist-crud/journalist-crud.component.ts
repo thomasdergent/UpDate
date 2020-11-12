@@ -102,6 +102,7 @@ export class JournalistCRUDComponent implements OnInit {
       let modal = document.getElementById('editEmployeeModal')
       modal.classList.remove('show')
       modal.classList.add('hidden')
+      window.location.reload();
     }
 
 

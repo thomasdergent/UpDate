@@ -11,6 +11,7 @@ import {ArticleModule} from '../views/article/article.module';
 import {AddarticleModule} from '../views/addarticle/addarticle.module';
 import {AdminDashboardModule} from '../views/admin-dashboard/admin-dashboard.module'
 import {JournalistCRUDModule} from '../views/journalist-crud/journalist-crud.module'
+import {ManageTagsModule} from '../views/manage-tags/manage-tags.module'
 
 
 
@@ -30,6 +31,7 @@ import {JournalistCRUDModule} from '../views/journalist-crud/journalist-crud.mod
     AddarticleModule,
     AdminDashboardModule,
     JournalistCRUDModule,
+    ManageTagsModule,
   ]
 })
 export class SharedModule { }
