@@ -192,11 +192,6 @@ table.table .avatar {
   opacity: 0.95;
 }
 
-.modal-background{
-	z-index: 900;
-	opacity: 0.95;
-}
-
 .modal .modal-header, .modal .modal-body, .modal .modal-footer {
 	padding: 20px 30px;
 }
@@ -226,3 +221,8 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }	
+
+.afa-stack fa-3x{
+	display: inline-block;
+    width: 100%;
+}
