@@ -8,169 +8,178 @@
 
 
 <body>
-	<div class="container">
-		<div class="table-responsive">
-			<div class="table-wrapper">
-				<div class="table-title">
-					<div class="row">
-						<div class="col-sm-6">
-							<h2>Journalisten beheren</h2>
-						</div>
-						<div class="col-sm-6">
-							<button class="modal-title" (click)="open()" class="btn btn-success" data-toggle="modal"><i
-									class="material-icons">&#xE147;</i><span>Toevoegen</span></button>
+	<section id="manage-journalists">
+		<div class="container">
+
+			<div class="section-title" data-aos="fade-left">
+				<h2>Journalisten beheren</h2>
+			</div>
+			<div class="table-responsive">
+				<div class="table-wrapper">
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								<h4>Journalisten</h4>
+							</div>
+							<div class="col-sm-6">
+								<button class="modal-title" (click)="open()" class="btn btn-success"
+									data-toggle="modal"><i
+										class="material-icons">&#xE147;</i><span>Toevoegen</span></button>
+							</div>
 						</div>
 					</div>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Gebruikersnaam</th>
+								<th>Voornaam</th>
+								<th>Achternaam</th>
+								<th>Email</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody *ngFor="let journalist of journalists">
+
+							<tr>
+								<td>{{journalist.userName}}</td>
+								<td>{{journalist.firstName}}</td>
+								<td>{{journalist.lastName}}</td>
+								<td>{{journalist.email}}</td>
+								<td>
+
+									<a (click)="editJournalist(journalist.userID)" class="edit" data-toggle="modal"><i
+											class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+									<a (click)="openDeleteModal(journalist.userID)" class="delete"
+										data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
+											title="Delete">&#xE872;</i></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>Gebruikersnaam</th>
-							<th>Voornaam</th>
-							<th>Achternaam</th>
-							<th>Email</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody *ngFor="let journalist of journalists">
-
-						<tr>
-							<td>{{journalist.userName}}</td>
-							<td>{{journalist.firstName}}</td>
-							<td>{{journalist.lastName}}</td>
-							<td>{{journalist.email}}</td>
-							<td>
-
-								<a (click)="editJournalist(journalist.userID)" class="edit"
-									data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
-										title="Edit">&#xE254;</i></a>
-
-								<a (click)="openDeleteModal(journalist.userID)" class="delete"
-									data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
-										title="Delete">&#xE872;</i></a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
 			</div>
 		</div>
-	</div>
 
 
-	<!-- Add Modal HTML -->
-	<div id="addEmployeeModal" class="modal fade">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<form ngNativeValidate (ngSubmit)="onSubmit()">
-					<div class="modal-header">
-						<h4 class="modal-title">Journalist toevoegen</h4>
-						<button type="button" class="close" data-dismiss="modal" (click)="close()">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Gebruikersnaam</label>
-							<input type="text" [(ngModel)]="journalist.userName" class="form-control" name="userName"
-								placeholder="Gebruikersnaam" required>
+		<!-- Add Modal HTML -->
+		<div id="addEmployeeModal" class="modal fade">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<form ngNativeValidate (ngSubmit)="onSubmit()">
+						<div class="modal-header">
+							<h4 class="modal-title">Journalist toevoegen</h4>
+							<button type="button" class="close" data-dismiss="modal" (click)="close()">&times;</button>
 						</div>
-						<div class="form-group">
-							<label>Voornaam</label>
-							<input type="text" [(ngModel)]="journalist.firstName" class="form-control" name="firstName"
-								placeholder="Voornaam" required>
+						<div class="modal-body">
+							<div class="form-group">
+								<label>Gebruikersnaam</label>
+								<input type="text" [(ngModel)]="journalist.userName" class="form-control"
+									name="userName" placeholder="Gebruikersnaam" required>
+							</div>
+							<div class="form-group">
+								<label>Voornaam</label>
+								<input type="text" [(ngModel)]="journalist.firstName" class="form-control"
+									name="firstName" placeholder="Voornaam" required>
+							</div>
+							<div class="form-group">
+								<label>Achternaam</label>
+								<input type="text" [(ngModel)]="journalist.lastName" class="form-control"
+									name="lastName" placeholder="Achternaam" required>
+							</div>
+							<div class="form-group">
+								<label>Email</label>
+								<input type="email" [(ngModel)]="journalist.email" class="form-control" name="email"
+									placeholder="Email" required>
+							</div>
+							<div class="form-group">
+								<label>Wachtwoord</label>
+								<input type="text" [(ngModel)]="journalist.password" class="form-control"
+									name="password" placeholder="Wachtwoord" required>
+							</div>
 						</div>
-						<div class="form-group">
-							<label>Achternaam</label>
-							<input type="text" [(ngModel)]="journalist.lastName" class="form-control" name="lastName"
-								placeholder="Achternaam" required>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
+								(click)="close()">
+							<input type="submit" class="btn btn-success" value="Add">
 						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input type="email" [(ngModel)]="journalist.email" class="form-control" name="email"
-								placeholder="Email" required>
-						</div>
-						<div class="form-group">
-							<label>Wachtwoord</label>
-							<input type="text" [(ngModel)]="journalist.password" class="form-control" name="password"
-								placeholder="Wachtwoord" required>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
-							(click)="close()">
-						<input type="submit" class="btn btn-success" value="Add">
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Edit Modal HTML -->
-	<div id="editEmployeeModal" class="modal fade">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<form ngNativeValidate (ngSubmit)="onSubmitEditJournalist()">
-					<div class="modal-header">
-						<h4 class="modal-title">Bewerk {{currentJournalist.userName}}</h4>
-						<button type="button" class="close" data-dismiss="modal" (click)="closeEdit()">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Gebruikersnaam: {{currentJournalist.userName}}</label>
-							<input type="text" [(ngModel)]="currentJournalist.userName" class="form-control"
-								name="userName"  required>
+		<!-- Edit Modal HTML -->
+		<div id="editEmployeeModal" class="modal fade">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<form ngNativeValidate #f="ngForm">
+						<div id="editCurrentJournalist"  >
+							<div class="modal-header">
+								<h4 class="modal-title">Bewerk {{currentJournalist.userName}}</h4>
+								<button type="button" class="close" data-dismiss="modal"
+									(click)="closeEdit()">&times;</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label>Gebruikersnaam: {{currentJournalist.userName}}</label>
+									<input type="text" [(ngModel)]="currentJournalist.userName" class="form-control" #userName="ngModel"
+										name="userName" required>
+								</div>
+								<div class="form-group">
+									<label>Voornaam: {{currentJournalist.firstName}}</label>
+									<input type="text" [(ngModel)]="currentJournalist.firstName" class="form-control" #firstName="ngModel"
+										name="firstName" required>
+								</div>
+								<div class="form-group">
+									<label>Achternaam: {{currentJournalist.lastName}}</label>
+									<input type="text" [(ngModel)]="currentJournalist.lastName" class="form-control" #lastName="ngModel"
+										name="lastName" required>
+								</div>
+								<div class="form-group">
+									<label>Email: {{currentJournalist.email}}</label>
+									<input type="email" [(ngModel)]="currentJournalist.email" class="form-control" #email="ngModel"
+										name="email" required>
+								</div>
+								<div class="form-group">
+									<label>Wachtwoord: {{currentJournalist.password}}</label>
+									<input type="text" [(ngModel)]="currentJournalist.password" class="form-control" #password="ngModel"
+										name="password" required>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
+									(click)="closeEdit()">
+								<input type="submit" class="btn btn-success" value="Wijzig" (click)="onSubmitEditJournalist()">
+							</div>
 						</div>
-						<div class="form-group">
-							<label>Voornaam: {{currentJournalist.firstName}}</label>
-							<input type="text" [(ngModel)]="currentJournalist.firstName" class="form-control"
-								name="firstName" required>
-						</div>
-						<div class="form-group">
-							<label>Achternaam: {{currentJournalist.lastName}}</label>
-							<input type="text" [(ngModel)]="currentJournalist.lastName" class="form-control"
-								name="userName" required>
-						</div>
-						<div class="form-group">
-							<label>Email: {{currentJournalist.email}}</label>
-							<input type="email" [(ngModel)]="currentJournalist.email" class="form-control"
-								name="userName" required>
-						</div>
-						<div class="form-group">
-							<label>Wachtwoord: {{currentJournalist.password}}</label>
-							<input type="text" [(ngModel)]="currentJournalist.password" class="form-control"
-								name="userName" required>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
-							(click)="closeEdit()">
-						<input type="submit" class="btn btn-success" value="Wijzig">
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Delete Modal HTML -->
-	<div id="deleteEmployeeModal" class="modal fade">
-		<div class="modal-dialog  modal-dialog-centered">
-			<div class="modal-content">
-				<form (ngSubmit)="deleteJournalist()">
-					<div class="modal-header">
-						<h4 class="modal-title">Verwijder {{currentJournalist.firstName}}
-							{{currentJournalist.firstName}}?</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-							(click)="closeDelete()">&times;</button>
-					</div>
-					<div class="modal-body">
-						<p>Zeker dat je deze journalist wilt verwijderen?</p>
-						<p class="text-warning"><small>Deze actie kan niet ongedaan worden gemaakt!</small></p>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
-							(click)="closeDelete()">
-						<input type="submit" class="btn btn-danger" value="Delete">
-					</div>
-				</form>
+		<!-- Delete Modal HTML -->
+		<div id="deleteEmployeeModal" class="modal fade">
+			<div class="modal-dialog  modal-dialog-centered">
+				<div class="modal-content">
+					<form (ngSubmit)="deleteJournalist()">
+						<div class="modal-header">
+							<h4 class="modal-title">Verwijder {{currentJournalist.firstName}}
+								{{currentJournalist.firstName}}?</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+								(click)="closeDelete()">&times;</button>
+						</div>
+						<div class="modal-body">
+							<p>Zeker dat je deze journalist wilt verwijderen?</p>
+							<p class="text-warning"><small>Deze actie kan niet ongedaan worden gemaakt!</small></p>
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
+								(click)="closeDelete()">
+							<input type="submit" class="btn btn-danger" value="Delete">
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 </body>

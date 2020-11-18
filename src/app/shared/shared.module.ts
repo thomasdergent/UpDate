@@ -12,8 +12,13 @@ import {AddarticleModule} from '../views/addarticle/addarticle.module';
 import {AdminDashboardModule} from '../views/admin-dashboard/admin-dashboard.module'
 import {JournalistCRUDModule} from '../views/journalist-crud/journalist-crud.module'
 import {ManageTagsModule} from '../views/manage-tags/manage-tags.module'
+import {JournalistDashboardModule} from '../views/journalist-dashboard/journalist-dashboard.module'
+import {EditArticleModule} from '../views/edit-article/edit-article.module'
 
-
+import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { AlertModule } from 'ngx-alerts';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
 @NgModule({
@@ -31,7 +36,15 @@ import {ManageTagsModule} from '../views/manage-tags/manage-tags.module'
     AddarticleModule,
     AdminDashboardModule,
     JournalistCRUDModule,
+    JournalistDashboardModule,
     ManageTagsModule,
+    EditArticleModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    BsDropdownModule.forRoot(),
+ 
+    // Specify your library as an import (set timeout to -1 for unlimited timeout, the message can only be closed by the user clicking on it)
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top'})
   ]
 })
 export class SharedModule { }

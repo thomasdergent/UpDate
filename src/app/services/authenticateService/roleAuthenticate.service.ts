@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { getUserFromLocalStorage } from 'src/app/models/user/user.model';
 import decode from 'jwt-decode';
+import { CurrentUser } from 'src/app/models/user/current-user.model';
+import { UserInformationService } from '../userService/user-information.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +10,15 @@ import decode from 'jwt-decode';
 export class RoleAuthenticateService {
 
  user = getUserFromLocalStorage();
+ currentUser: CurrentUser;
 
-  constructor() { }
+  constructor(
+    private _userInformationService: UserInformationService,
+  ) {
+    this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
+      this.currentUser = currentUser;
+    });
+   }
 
   isUser() {
     const role = this.user.role;

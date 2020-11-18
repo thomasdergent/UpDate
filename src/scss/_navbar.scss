@@ -1,0 +1,24 @@
+@import "./variables";
+
+
+.navbar{
+    background-color: $buttonColor;
+    color: white !important;
+    a{
+      color: white;
+
+      &:hover{
+          color: $lightBlueBackground;
+      }
+    }
+
+}
+
+.dropdown-menu{
+    a{
+        color: $buttonColor !important;
+    }
+    a:hover{
+        background-color: $platinumColor;
+    }
+}

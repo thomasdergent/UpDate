@@ -14,6 +14,10 @@ export class ArticleService {
     return this.http.get<Article>("https:localhost:44348/api/Article/" + id);
   }
 
+  getArticleByTitle(titleName: string): Observable<Article>{
+    return this.http.get<Article>("https:localhost:44348/api/Article/title/" + titleName);
+  }
+
   getArticlesByUserID(id: number): Observable<Article[]>{
     return this.http.get<Article[]>("https:localhost:44348/api/Article/User/" + id);
   }
@@ -30,9 +34,10 @@ export class ArticleService {
     return this.http.put<Article>("https://localhost:44348/api/Article/" + articleID, article);
   }
 
-  deleteUser(articleID: number) {
-    return this.http.delete<Article>("https://localhost:44348/api/Article/" + articleID);
+  deleteArticle(id: number) {
+    return this.http.delete<Article>("https://localhost:44348/api/Article/" + id);
   }
+
 
 
 }

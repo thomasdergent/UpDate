@@ -1,0 +1,126 @@
+@import "./variables";
+
+.bootstrapCard{
+
+    .text-primary {
+      color: $buttonColor !important;
+    }
+    
+    .icon-box {
+      margin-bottom: 20px;
+    }
+
+    .card-header{
+        background-color: $buttonColor !important;
+    }
+
+    .card-title{
+        font-size: 22px;
+        color: $titleColor !important;
+    }
+    
+    .icon {
+      float: left;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      background: $buttonColor;
+      border-radius: 50%;
+      transition: 0.5s;
+      border: 1px solid $buttonColor;
+    }
+    
+    .icon i {
+      color: $wit;
+      font-size: 24px;
+    }
+    
+    .icon-box:hover .icon {
+      background: $creamHover !important;
+    }
+    
+    .icon-box:hover .icon i {
+      color: $creamHover !important;
+    }
+    
+    .description {
+      margin-left: 80px;
+      line-height: 24px;
+      font-size: 14px;
+    }
+
+.btn{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+
+  
+  .btn:visited{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+  
+  .btn:hover{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn:active{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn:focus{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn-primary{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+  
+  .btn-primary:visited{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+  
+  .btn-primary:hover{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn-primary:active{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn-primary:focus{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn:active:focus{
+     color: $wit;
+     background: $titleColor !important; 
+     border: $titleColor;
+   }
+  
+  .btn-primary:active:focus{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  }
