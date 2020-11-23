@@ -14,6 +14,11 @@ import {JournalistCRUDModule} from '../views/journalist-crud/journalist-crud.mod
 import {ManageTagsModule} from '../views/manage-tags/manage-tags.module'
 import {JournalistDashboardModule} from '../views/journalist-dashboard/journalist-dashboard.module'
 import {EditArticleModule} from '../views/edit-article/edit-article.module'
+import {ArticleDetailsModule} from '../views/article-details/article-details.module'
+import {ManageArticlesModule} from '../views/manage-articles/manage-articles.module'
+import {PublishArticleModule} from '../views/publish-article/publish-article.module'
+import {HomeModule} from '../views/home/home.module'
+import {TagModule} from '../views/tag/tag.module'
 
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -39,8 +44,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     JournalistDashboardModule,
     ManageTagsModule,
     EditArticleModule,
+    ManageArticlesModule,
     BrowserAnimationsModule,
-    BrowserModule,
+    PublishArticleModule,
+    ArticleDetailsModule,
+    HomeModule,
     BsDropdownModule.forRoot(),
  
     // Specify your library as an import (set timeout to -1 for unlimited timeout, the message can only be closed by the user clicking on it)

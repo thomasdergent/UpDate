@@ -1,0 +1,64 @@
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+
+
+
+<body>
+	<section id="home">
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="section-title" data-aos="fade-left">
+        <h2>Laatste nieuws</h2>
+    </div>
+
+  <div class="row">
+
+
+    <!-- Post Content Column -->
+    <div class="col-md-8">
+
+      <div class="row">
+        <div *ngFor="let articlePublished of articlesPublished" class="col-md-6 card-margin">
+          <div class="card my-4 bootstrapCard h-100">
+            <div class="card-header">
+              {{articlePublished.tag.name}}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"> {{articlePublished.title}}</h5>
+              <p class="card-text">{{articlePublished.shortSummary}}</p>
+              <p class="card-text" style="font-style: italic;">door {{articlePublished.user.firstName}} {{articlePublished.user.lastName}}</p>
+              <a routerLink="/article/{{articlePublished.title}}" class="btn btn-primary">Lees verder</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
+
+      <!-- Categories Widget -->
+      <div class="card my-4 bootstrapCard links">
+        <div class="card-header">Categorieën</div>
+        <div class="card-body">
+          <div class="row">
+            <ul class="list-unstyled col-md-6" *ngFor="let tag of tags">
+              <li class="col-md-12">
+                <a routerLink="/home/categorie/{{tag.name}}">{{tag.name}}</a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+</section>
+</body>

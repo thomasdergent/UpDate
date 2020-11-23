@@ -87,28 +87,28 @@ table.table td a.edit {
 }
 table.table td a.edit:hover {
     color: $editHover;
-    cursor: grab;
+    cursor: pointer;
 }
 table.table td a.delete {
 	color: $deleteColor;
 }
 table.table td a.delete:hover {
     color: $deleteHover;
-    cursor: grab;
+    cursor: pointer;
 }
 table.table td a.review {
 	color: $review;
 }
 table.table td a.review:hover {
     color: $reviewHover;
-    cursor: grab;
+    cursor: pointer;
 }
-table.table td a.published {
+table.table td a.publish {
 	color: $info;
 }
-table.table td a.published:hover {
+table.table td a.publish:hover {
     color: $infoHover;
-    cursor: grab;
+    cursor: pointer;
 }
 table.table td i {
 	font-size: 19px;

@@ -17,7 +17,10 @@ export class TagService {
   getTagByID(tagID: number): Observable<Tag>{
     return this.http.get<Tag>("https:localhost:44348/api/Tag/" + tagID);
   }
-
+  
+  getTagByTagName(tagName: string): Observable<Tag>{
+    return this.http.get<Tag>("https:localhost:44348/api/Tag/name/" + tagName);
+  }
   addTag(tag: Tag) {
     return this.http.post<Tag>("https://localhost:44348/api/Tag/", tag);
   }

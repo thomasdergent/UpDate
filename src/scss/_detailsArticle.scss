@@ -1,0 +1,105 @@
+@import './variables';
+
+.detailsArticle{
+    margin-left: 10%;
+    margin-right: 10%;
+
+    .col-md-12{
+        margin-bottom: 5px;
+    }
+
+    .tag{
+        font-weight: bold;
+        color: $buttonColor !important;
+    }
+
+    .shortSummary{
+        font-weight: bold;
+        font-style: italic;
+        margin-top: 1%;
+    }
+
+    h1{
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    h3{
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+.btn{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+    margin-top: 1.5%;
+  }
+
+  
+  .btn:visited{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+  
+  .btn:hover{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn:active{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn:focus{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn-primary{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+  
+  .btn-primary:visited{
+    color: $wit;
+    background: $buttonColor !important;
+    border: $buttonColor !important;
+  }
+  
+  .btn-primary:hover{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn-primary:active{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn-primary:focus{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+  
+  .btn:active:focus{
+     color: $wit;
+     background: $titleColor !important; 
+     border: $titleColor;
+   }
+  
+  .btn-primary:active:focus{
+    color: $wit;
+    background: $titleColor !important;
+    border: $titleColor !important;
+  }
+}

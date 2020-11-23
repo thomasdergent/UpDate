@@ -1,5 +1,46 @@
 @import "./variables";
 
+.card-margin{
+  margin-bottom: 40px !important;
+}
+
+.links{
+  a{
+    color: $buttonColor !important;
+  }
+
+  a:hover{
+    color: $titleColor !important;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .links{
+    position: fixed !important;
+    width: 25%;
+  }
+}
+
+.publish {
+	color: $info !important;
+}
+.publish:hover {
+    color: $infoHover !important;
+    cursor: pointer;
+}
+
+.delete {
+  color: $deleteColor !important;
+  float: right;
+}
+.delete:hover {
+    color: $deleteHover !important;
+    cursor: pointer;
+}
+
+.number{
+  padding-bottom: 2px !important;
+}
 .bootstrapCard{
 
     .text-primary {
@@ -12,6 +53,7 @@
 
     .card-header{
         background-color: $buttonColor !important;
+        color: $wit !important;
     }
 
     .card-title{

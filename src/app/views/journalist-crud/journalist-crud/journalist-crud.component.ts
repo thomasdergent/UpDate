@@ -14,11 +14,11 @@ export class JournalistCRUDComponent implements OnInit {
   journalists: User[];
   //declareren als nieuwe user want anders laadt de pagina niet omdat modal als div in de pagina zit en niet in een ander com
   currentJournalist: User = new User(0, '', '', '', '', '', '', 2);
-  journalist: User = new User( 0, '', '', '', '', '', null,2);
+  journalist: User = new User(0, '', '', '', '', '', null, 2);
   updateJournalist: User = new User(0, '', '', '', '', '', null, 2);
   submitted: boolean = false;
   submitEditJournalist: boolean = false;
-  onSubmitDeleteJournalist: boolean =false;
+  onSubmitDeleteJournalist: boolean = false;
 
   constructor(
     private _userService: UserService,
@@ -39,43 +39,43 @@ export class JournalistCRUDComponent implements OnInit {
 
   //open modal (add class from scss)
   open() {
-    let modal = document.getElementById('addEmployeeModal')
+    let modal = document.getElementById('addJournalistModal')
     modal.classList.remove('hidden')
     modal.classList.add('show')
   }
 
   //close modal (add class from scss)
   close() {
-    let modal = document.getElementById('addEmployeeModal')
+    let modal = document.getElementById('addJournalistModal')
     modal.classList.remove('show')
     modal.classList.add('hidden')
   }
 
   closeEdit() {
-    let modal = document.getElementById('editEmployeeModal')
+    let modal = document.getElementById('editJournalistModal')
     modal.classList.remove('show')
     modal.classList.add('hidden')
   }
 
   closeDelete() {
-    let modal = document.getElementById('deleteEmployeeModal')
+    let modal = document.getElementById('deleteJournalistModal')
     modal.classList.remove('show')
     modal.classList.add('hidden')
   }
 
   onSubmit() {
     this.submitted = true;
-    
+
 
     this._userService.addUser(this.journalist).subscribe();
 
-    let modal = document.getElementById('addEmployeeModal')
+    let modal = document.getElementById('addJournalistModal')
     modal.classList.remove('show')
     modal.classList.add('hidden')
     window.location.reload();
   }
 
-  
+
   editJournalist(id: number) {
     this._userService.getUserByID(id).subscribe(
       result => {
@@ -86,47 +86,47 @@ export class JournalistCRUDComponent implements OnInit {
 
 
 
-    let modal = document.getElementById('editEmployeeModal')
+    let modal = document.getElementById('editJournalistModal')
     modal.classList.remove('hidden')
     modal.classList.add('show')
-    }
-
-    onSubmitEditJournalist(){
-      this.submitEditJournalist=true;
-
-
-      this.updateJournalist= new User(this.currentJournalist.userID, this.currentJournalist.firstName, this.currentJournalist.lastName, this.currentJournalist.email, this.currentJournalist.userName, this.currentJournalist.password, null, 2, new Role(2, "Journalist"));
-
-      this._userService.updateUser(this.currentJournalist.userID, this.currentJournalist).subscribe();
-
-      let modal = document.getElementById('editEmployeeModal')
-      modal.classList.remove('show')
-      modal.classList.add('hidden')
-      window.location.reload();
-    }
-
-
-    openDeleteModal(id: number){
-
-      this._userService.getUserByID(id).subscribe(
-        result => {
-          this.currentJournalist = result;
-        }
-      );
-  
-      let modal = document.getElementById('deleteEmployeeModal')
-      modal.classList.remove('hidden')
-      modal.classList.add('show')
-    }
-  
-      deleteJournalist(){
-        this.onSubmitDeleteJournalist=true;
-  
-        this._userService.deleteUser(this.currentJournalist.userID).subscribe();
-        window.location.reload();
-      }
-      
-      ngOnInit(): void {
-      }
-
   }
+
+  onSubmitEditJournalist() {
+    this.submitEditJournalist = true;
+
+
+    this.updateJournalist = new User(this.currentJournalist.userID, this.currentJournalist.firstName, this.currentJournalist.lastName, this.currentJournalist.email, this.currentJournalist.userName, this.currentJournalist.password, null, 2, new Role(2, "Journalist"));
+
+    this._userService.updateUser(this.currentJournalist.userID, this.currentJournalist).subscribe();
+
+    let modal = document.getElementById('deleteJournalistModal')
+    modal.classList.remove('show')
+    modal.classList.add('hidden')
+    window.location.reload();
+  }
+
+
+  openDeleteModal(id: number) {
+
+    this._userService.getUserByID(id).subscribe(
+      result => {
+        this.currentJournalist = result;
+      }
+    );
+
+    let modal = document.getElementById('deleteJournalistModal')
+    modal.classList.remove('hidden')
+    modal.classList.add('show')
+  }
+
+  deleteJournalist() {
+    this.onSubmitDeleteJournalist = true;
+
+    this._userService.deleteUser(this.currentJournalist.userID).subscribe();
+    window.location.reload();
+  }
+
+  ngOnInit(): void {
+  }
+
+}

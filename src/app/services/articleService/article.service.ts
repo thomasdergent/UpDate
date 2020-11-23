@@ -18,12 +18,33 @@ export class ArticleService {
     return this.http.get<Article>("https:localhost:44348/api/Article/title/" + titleName);
   }
 
+  getArticleByTitleToReview(titleName: string): Observable<Article>{
+    return this.http.get<Article>("https:localhost:44348/api/Article/review/title/" + titleName);
+  }
+
+  getArticleByTitlePublished(titleName: string): Observable<Article>{
+    return this.http.get<Article>("https:localhost:44348/api/Article/published/title/" + titleName);
+  }
+
   getArticlesByUserID(id: number): Observable<Article[]>{
     return this.http.get<Article[]>("https:localhost:44348/api/Article/User/" + id);
   }
 
   getArticles(): Observable<Article[]>{
-    return this.http.get<Article[]>("https::localhost:44348/api/Article");
+    return this.http.get<Article[]>("https:localhost:44348/api/Article");
+  }
+
+  getArticlesToReview(): Observable<Article[]>{
+    return this.http.get<Article[]>("https:localhost:44348/api/Article/review/articles");
+  }
+
+  getArticlesPublished(): Observable<Article[]>{
+    return this.http.get<Article[]>("https:localhost:44348/api/Article/published/articles");
+  }
+
+
+  getArticlesPublishedByTag(tagName: string): Observable<Article[]>{
+    return this.http.get<Article[]>("https:localhost:44348/api/Article/published/articles/" + tagName);
   }
 
   addArticle(article: Article) {

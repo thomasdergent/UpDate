@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<ngx-alerts></ngx-alerts>
+
+
+<section id="detailsArticle" class="detailsArticle">
+    <div class="section-title" data-aos="fade-left">
+        <h2>{{article.title}}</h2>
+        <p style="font-style: italic;">door {{article.user.firstName}} {{article.user.lastName}}</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 tag">
+            <hr>
+            <p>{{article.tag.name}}</p>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 shortSummary">
+            <p>{{article.shortSummary}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>{{article.subTitle}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>{{article.body}}</p>
+        </div>
+    </div>
+
+    <div>
+        <a (click)="addLikeorDislike()" class="publish" data-toggle="modal">{{numberLikes}} <i class="material-icons"
+                data-toggle="tooltip" title="Like">&#xe8dc;</i></a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card my-4 bootstrapCard">
+                <div class="card-header">
+                    Laat een reactie achter!
+                </div>
+                <div class="card-body">
+                    <form id="addCommentForm" ngNativeValidate (ngSubmit)="addComment()">
+                        <div class="form-group">
+                            <textarea type="text" [(ngModel)]="comment" name="body" class="form-control"
+                                placeholder=" Voeg reactie toe" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Reageer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Single Comment -->
+        <div class="col-md-12" *ngFor="let reaction of reactions">
+            <div class="card my-4 bootstrapCard">
+                <div class="card-body">
+                    <h5 class="mt-0">{{reaction.user.userName}}</h5>
+                    {{reaction.body}}
+                    <p>
+                        <a *ngIf="reaction.user.userID==user.userID" (click)="deleteReaction(reaction.reactionID)"
+                            class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
+                                title="Delete">&#xE872;</i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

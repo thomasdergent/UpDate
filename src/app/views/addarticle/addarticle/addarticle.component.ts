@@ -84,7 +84,6 @@ export class AddarticleComponent implements OnInit {
         this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft)
 
       this._articleService.addArticle(article).subscribe();
-      localStorage.setItem("hoeee", JSON.stringify(article));
       this.router.navigate(['/journalist/dashboard']);
 
     }.bind(this), 1000);

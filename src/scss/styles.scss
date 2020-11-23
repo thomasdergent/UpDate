@@ -38,7 +38,6 @@ $UpDate-theme: mat-light-theme((
 
 @import "~bootstrap/scss/bootstrap-grid";
 
-@import '~bootstrap/dist/css/bootstrap.min.css';
 
 @import "./crudTable";
 
@@ -54,11 +53,19 @@ $UpDate-theme: mat-light-theme((
 
 @import "./navbar";
 
-html { height: 100%}
+@import "./detailsArticle";
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+html { height:100%;overflow:auto}
 
 body {
 	color: #566787;
-	font-family: 'Varela Round', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   height: 100%; 
 }
@@ -68,5 +75,9 @@ textarea{
   margin-bottom: 30px !important;
 }
 
+a:hover{
+  cursor: pointer;
+  text-decoration: none !important;
+}
 
 
