@@ -12,15 +12,15 @@ export class User {
     public role: Role;
 
     constructor(
-        userID: number,
         firstName: string,
         lastName: string,
         email: string,
         userName: string,
         password: string,
         token: string,
-        roleID: number,
-        role?: Role
+        roleID?: number,
+        role?: Role,
+        userID?: number
     ) {
         this.userID = userID;
         this.firstName = firstName;
@@ -31,11 +31,14 @@ export class User {
         this.token = token;
         this.roleID = roleID;
         this.role = role;
+        if (userID){
+            this.userID=userID;
+        }
     }
 }
 
 export function getUserFromLocalStorage() {
     const user = JSON.parse(localStorage.getItem('user'));
 
-    return new User(user.userID, user.firstName, user.lastName, user.email, user.userName, user.password, user.token, user.roleID, user.role);
+    return new User(user.firstName, user.lastName, user.email, user.userName, user.password, user.token, user.roleID, user.role, user.userID);
 }

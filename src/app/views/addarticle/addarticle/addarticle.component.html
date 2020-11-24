@@ -6,58 +6,56 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<ngx-alerts></ngx-alerts>
-
 
 <section id="addArticle" class="bootstrapCard">
+    <ngx-alerts></ngx-alerts>  
     <div class="section-title" data-aos="fade-left">
         <h2>Artikel toevoegen</h2>
     </div>
     <div class="card shadow">
         <div class="card-body">
-    <div class="container">
-
-        <form ngNativeValidate>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="title">Titel</label>
-                    <input type="text" [(ngModel)]="article.title" name="title" placeholder="Titel" class="form-control"
-                        required />
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="tags">Categorie</label>
-                    <div class="input-group" required>
-                        <select class="custom-select" id="tags" [(ngModel)]="selectedTag" name="tags">
-                            <option selected value="start">-- Categorieën --</option>
-                            <option *ngFor="let tag of tags" [ngValue]="tag.tagID">{{tag.name}}</option>
-                        </select>
+            <div class="container">
+                <form ngNativeValidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="title">Titel</label>
+                            <input type="text" [(ngModel)]="article.title" name="title" placeholder="Titel"
+                                class="form-control" required />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">Categorie</label>
+                            <div class="input-group" required>
+                                <select class="custom-select" id="tags" [(ngModel)]="selectedTag" name="tags">
+                                    <option selected value="start">-- Categorieën --</option>
+                                    <option *ngFor="let tag of tags" [ngValue]="tag.tagID">{{tag.name}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <label for="shortSummary">Korte inhoud</label>
-                <textarea rows="10" type="text" [(ngModel)]="article.shortSummary" name="shortSummary"
-                    placeholder="Korte inhoud" class="form-control" required></textarea>
+                    <div class="form-row">
+                        <label for="shortSummary">Korte inhoud</label>
+                        <textarea rows="10" type="text" [(ngModel)]="article.shortSummary" name="shortSummary"
+                            placeholder="Korte inhoud" class="form-control" required></textarea>
 
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="subTitle">Sub titel</label>
+                            <input type="text" [(ngModel)]="article.subTitle" name="subTitle" placeholder="Sub titel"
+                                class="form-control" required />
+                        </div>
+                        <div class="form-group col-md-6">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Inhoud</label>
+                        <textarea rows="20" type="text" [(ngModel)]="article.body" name="body" placeholder="Inhoud"
+                            class="form-control" required></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit" (click)="addArticleDraft()">Opslagen</button>
+                    <button class="btn btn-primary" type="submit" (click)="addArticleToReview()">Inzenden</button>
+                </form>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="subTitle">Sub titel</label>
-                    <input type="text" [(ngModel)]="article.subTitle" name="subTitle" placeholder="Sub titel"
-                        class="form-control" required />
-                </div>
-                <div class="form-group col-md-6">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="body">Inhoud</label>
-                <textarea rows="20" type="text" [(ngModel)]="article.body" name="body" placeholder="Inhoud"
-                    class="form-control" required></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit" (click)="addArticleDraft()">Opslagen</button>
-            <button class="btn btn-primary" type="submit" (click)="addArticleToReview()">Inzenden</button>
-        </form>
-    </div>
-  </div>
         </div>
+    </div>
 </section>

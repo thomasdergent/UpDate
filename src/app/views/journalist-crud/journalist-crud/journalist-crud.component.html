@@ -8,6 +8,9 @@
 
 
 <body>
+
+	<ngx-alerts></ngx-alerts>   
+
 	<section id="manage-journalists">
 		<div class="container">
 
@@ -22,7 +25,7 @@
 								<h4>Journalisten</h4>
 							</div>
 							<div class="col-sm-6">
-								<button class="modal-title" (click)="open()" class="btn btn-success"
+								<button class="modal-title" (click)="openAdd()" class="btn btn-success"
 									data-toggle="modal"><i
 										class="material-icons">&#xE147;</i><span>Toevoegen</span></button>
 							</div>
@@ -47,10 +50,10 @@
 								<td>{{journalist.email}}</td>
 								<td>
 
-									<a (click)="editJournalist(journalist.userID)" class="edit" data-toggle="modal"><i
+									<a (click)="openEdit(journalist.userID)" class="edit" data-toggle="modal"><i
 											class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-									<a (click)="openDeleteModal(journalist.userID)" class="delete"
+									<a (click)="openDelete(journalist.userID)" class="delete"
 										data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
 											title="Delete">&#xE872;</i></a>
 								</td>
@@ -66,10 +69,10 @@
 		<div id="addJournalistModal" class="modal fade">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<form ngNativeValidate (ngSubmit)="onSubmit()">
+					<form ngNativeValidate (ngSubmit)="onSubmitAdd()">
 						<div class="modal-header">
 							<h4 class="modal-title">Journalist toevoegen</h4>
-							<button type="button" class="close" data-dismiss="modal" (click)="close()">&times;</button>
+							<button type="button" class="close" data-dismiss="modal" (click)="closeAdd()">&times;</button>
 						</div>
 						<div class="modal-body">
 							<div class="form-group">
@@ -100,7 +103,7 @@
 						</div>
 						<div class="modal-footer">
 							<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
-								(click)="close()">
+								(click)="closeAdd()">
 							<input type="submit" class="btn btn-success" value="Add">
 						</div>
 					</form>

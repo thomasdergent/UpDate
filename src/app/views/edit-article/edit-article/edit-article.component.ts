@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
+import { AlertService } from 'ngx-alerts';
 import { Article } from 'src/app/models/article/article.model';
 import { Articlestatus } from 'src/app/models/articlestatus/articlestatus.model';
 import { Tag } from 'src/app/models/tag/tag.model';
@@ -17,7 +18,7 @@ import { UserInformationService } from 'src/app/services/userService/user-inform
 })
 export class EditArticleComponent implements OnInit {
 
-  article: Article = new Article(0, "", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
   tags: Tag[];
   selectedTag: number;
   articleStatusDraft: Articlestatus;
@@ -31,6 +32,7 @@ export class EditArticleComponent implements OnInit {
     private _tagService: TagService,
     private _userInformationService: UserInformationService,
     private _articleStatusService: ArticleStatusService,
+    private alertService: AlertService,
     private router: Router) {
     this.getTags();
   }
@@ -43,7 +45,6 @@ export class EditArticleComponent implements OnInit {
       result => {
         this.article = result;
         this.selectedTag = this.article.tagID;
-        localStorage.setItem("testarticle", JSON.stringify(result));
       }
     );
   }
@@ -61,23 +62,22 @@ export class EditArticleComponent implements OnInit {
     this._tagService.getTagByID(this.selectedTag).subscribe(
       result => {
         this.currentTag = result;
+
+        this._articleStatusService.getArticleStatusByID(1).subscribe(
+          result => {
+            this.articleStatusDraft = result;
+
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+              this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft, this.article.articleID)
+
+            this._articleService.updateArticle(this.article.articleID, article).subscribe();
+            this.alertService.success('Artikel opgeslagen');
+            this.router.navigate(['/journalist/dashboard']);
+          }
+        );
+
       }
     );
-
-    this._articleStatusService.getArticleStatusByID(1).subscribe(
-      result => {
-        this.articleStatusDraft = result;
-      }
-    );
-
-    setTimeout(function () {
-      const article = new Article(this.article.articleID, this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
-        this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft)
-
-      this._articleService.updateArticle(this.article.articleID, article).subscribe();
-      this.router.navigate(['/journalist/dashboard']);
-
-    }.bind(this), 1000);
   }
 
   addArticleToReview() {
@@ -85,23 +85,20 @@ export class EditArticleComponent implements OnInit {
     this._tagService.getTagByID(this.selectedTag).subscribe(
       result => {
         this.currentTag = result;
+
+        this._articleStatusService.getArticleStatusByID(1).subscribe(
+          result => {
+            this.articleStatusToReview = result;
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+              this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 2, this.articleStatusToReview, this.article.articleID)
+
+            this._articleService.updateArticle(this.article.articleID, article).subscribe();
+            this.alertService.success('Artikel ingezonden');
+            this.router.navigate(['/journalist/dashboard']);
+          }
+        );
       }
     );
-
-    this._articleStatusService.getArticleStatusByID(1).subscribe(
-      result => {
-        this.articleStatusToReview = result;
-      }
-    );
-
-    setTimeout(function () {
-      const article = new Article(this.article.articleID, this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
-        this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 2, this.articleStatusToReview)
-
-      this._articleService.updateArticle(this.article.articleID, article).subscribe();
-
-      this.router.navigate(['/journalist/dashboard']);
-    }.bind(this), 1000);
   }
 
   ngOnInit(): void {

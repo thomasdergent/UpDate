@@ -18,21 +18,19 @@ export class ManageArticlesComponent implements OnInit {
     private _tagService: TagService,
     private router: Router,
   ) {
-    setTimeout(() => {
-      this.getArticlesToReview();
-    }, 500);
+   this.getArticlesToReview();
   }
 
   getArticlesToReview() {
     this._articleService.getArticlesToReview().subscribe(
       result => {
         this.articles = result;
-        localStorage.setItem("review", JSON.stringify(this.articles));
       })
   }
 
 
   ngOnInit(): void {
+    this.getArticlesToReview();
   }
 
 }

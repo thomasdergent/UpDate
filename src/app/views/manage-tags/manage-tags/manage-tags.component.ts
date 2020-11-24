@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'ngx-alerts';
 import { Tag } from 'src/app/models/tag/tag.model';
 import { TagService } from 'src/app/services/tagService/tag.service';
 
@@ -10,20 +11,19 @@ import { TagService } from 'src/app/services/tagService/tag.service';
 export class ManageTagsComponent implements OnInit {
 
   tags: Tag[];
-  tag: Tag = new Tag(0, "");
-  currentTag: Tag = new Tag(0, "");
-  updateTag: Tag = new Tag(0, "");
+  tag: Tag = new Tag("");
+  currentTag: Tag = new Tag("");
+  updateTag: Tag = new Tag("");
   submittedAdd: boolean = false;
   submittedEditTag: boolean = false;
-  onSubmitDelete: boolean = false;
+  onSubmittedDelete: boolean = false;
 
   constructor(
     private _tagService: TagService,
+    private alertService: AlertService,
   ) {
 
-    setTimeout(function () {
-      this.getTags();
-    }.bind(this), 500);
+    this.getTags();
 
   }
 
@@ -47,10 +47,35 @@ export class ManageTagsComponent implements OnInit {
     modal.classList.add('hidden')
   }
 
+  openEdit(id: number) {
+    this._tagService.getTagByID(id).subscribe(
+      result => {
+        this.currentTag = result;
+      }
+    );
+
+    let modal = document.getElementById('editTag')
+    modal.classList.remove('hidden')
+    modal.classList.add('show')
+  }
+
   closeEdit() {
     let modal = document.getElementById('editTag')
     modal.classList.remove('show')
     modal.classList.add('hidden')
+  }
+
+
+  openDelete(id: number) {
+    this._tagService.getTagByID(id).subscribe(
+      result => {
+        this.currentTag = result;
+      }
+    );
+
+    let modal = document.getElementById('deleteTag')
+    modal.classList.remove('hidden')
+    modal.classList.add('show')
   }
 
   closeDelete() {
@@ -62,54 +87,50 @@ export class ManageTagsComponent implements OnInit {
   onSubmitAdd() {
     this.submittedAdd = true;
 
-    this._tagService.addTag(this.tag).subscribe();
+    this._tagService.addTag(this.tag).subscribe(
+      result => {
+        let modal = document.getElementById('addTag')
+        modal.classList.remove('show')
+        modal.classList.add('hidden')
 
-    let modal = document.getElementById('addTag')
-    modal.classList.remove('show')
-    modal.classList.add('hidden')
-    window.location.reload();
-  }
-
-  editTag(id: number){
-    this._tagService.getTagByID(id).subscribe(
-      result=>{
-        this.currentTag=result;
+        this.tag=new Tag("");
+        this.getTags();
+        this.alertService.success('Categorie toegevoegd');
       }
     );
-
-    let modal = document.getElementById('editTag')
-    modal.classList.remove('hidden')
-    modal.classList.add('show')
   }
 
-  onSubmitEditTag(){
+  onSubmitEdit() {
     this.submittedEditTag = true;
 
-    this.updateTag= new Tag(this.currentTag.tagID, this.currentTag.name);
+    this.updateTag = new Tag(this.currentTag.name, this.currentTag.tagID);
 
-    this._tagService.updateTag(this.currentTag.tagID, this.currentTag).subscribe();
+    this._tagService.updateTag(this.currentTag.tagID, this.currentTag).subscribe(
+      result => {
+        let modal = document.getElementById('editTag')
+        modal.classList.remove('show')
+        modal.classList.add('hidden')
 
-    window.location.reload();
+        this.getTags();
+        this.alertService.success('Categorie bewerkt');
+      }
+    );
   }
 
-deleteTag(id: number){
-  this._tagService.getTagByID(id).subscribe(
-    result =>{
-      this.currentTag=result;
-    }
-  );
+  onSubmitDelete() {
+    this.onSubmittedDelete = true;
 
-  let modal = document.getElementById('deleteTag')
-  modal.classList.remove('hidden')
-  modal.classList.add('show')
-}
+    this._tagService.deleteTag(this.currentTag.tagID).subscribe(
+      result => {
+        let modal = document.getElementById('deleteTag')
+        modal.classList.remove('show')
+        modal.classList.add('hidden')
 
-onSubmitDeleteTag(){
-  this.onSubmitDelete=true;
-
-  this._tagService.deleteTag(this.currentTag.tagID).subscribe();
-  window.location.reload();
-}
+        this.getTags();
+        this.alertService.success('Categorie verwijderd');
+      }
+    );
+  }
 
   ngOnInit(): void {
   }

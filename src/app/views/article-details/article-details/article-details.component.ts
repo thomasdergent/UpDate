@@ -5,13 +5,13 @@ import { ArticleService } from 'src/app/services/articleService/article.service'
 import { ArticleStatusService } from 'src/app/services/articleStatusService/article-status.service';
 import { TagService } from 'src/app/services/tagService/tag.service';
 import { UserInformationService } from 'src/app/services/userService/user-information.service';
-import { CommentService } from '../../../services/commentService/comment.service'
 import { ReactionService } from '../../../services/reactionService/reaction.service'
-import { Comment } from '../../../models/comment/comment.model'
 import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
 import { Reaction } from 'src/app/models/reaction/reaction.model';
 import { Like } from '../../../models/like/like.model';
 import { LikeService } from '../../../services/likeService/like.service'
+import { RoleAuthenticateService } from 'src/app/services/authenticateService/roleAuthenticate.service';
+import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-article-details',
@@ -20,14 +20,14 @@ import { LikeService } from '../../../services/likeService/like.service'
 })
 export class ArticleDetailsComponent implements OnInit {
 
-  article: Article = new Article(0, "", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
   comment: string;
   currentLikes: Like[];
   usersLike = [];
   numberLikes = 0;
-  currentComment = new Comment("");
   submitted: boolean = false;
   reactions: Reaction[];
+  user: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,18 +35,24 @@ export class ArticleDetailsComponent implements OnInit {
     private _tagService: TagService,
     private _userInformationService: UserInformationService,
     private _articleStatusService: ArticleStatusService,
-    private _commentService: CommentService,
     private _reactionService: ReactionService,
     private _likeService: LikeService,
+    public roleAuthenticate: RoleAuthenticateService,
+    private alertService: AlertService,
     private router: Router) {
 
     this.loadArticle();
 
     this.loadReactions();
     this.getLikes();
+    this.getUserInfo();
   }
 
-  user = getUserFromLocalStorage();
+  getUserInfo() {
+    if (this.roleAuthenticate.isLoggedIn()) {
+      this.user = getUserFromLocalStorage();
+    }
+  }
 
   loadArticle() {
     const articleTitle = this.route.snapshot.paramMap.get('title');
@@ -98,10 +104,11 @@ export class ArticleDetailsComponent implements OnInit {
         this._likeService.deleteLikeByUser(this.user.userID).subscribe(
           result => {
             for (let i = 0; i < this.usersLike.length; i++) {
-              if(this.usersLike[i] == this.user.userID){
+              if (this.usersLike[i] == this.user.userID) {
                 this.usersLike.splice(i, 1);
               }
             }
+            this.alertService.success('Vind ik niet meer leuk');
             this.numberLikes = 0;
             this.getLikes();
           }
@@ -110,6 +117,7 @@ export class ArticleDetailsComponent implements OnInit {
         const like = new Like(1, this.user.userID, this.article.articleID);
         this._likeService.addLike(like).subscribe(
           result => {
+            this.alertService.success('Vind ik leuk');
             this.numberLikes = 0;
             this.getLikes();
           }
@@ -127,6 +135,7 @@ export class ArticleDetailsComponent implements OnInit {
     const reaction = new Reaction(this.comment, this.user.userID, this.article.articleID);
     this._reactionService.addReaction(reaction).subscribe(
       result => {
+        this.alertService.success('Reactie toegevoegd');
         this.loadReactions();
         this.comment = "";
       }
@@ -152,6 +161,7 @@ export class ArticleDetailsComponent implements OnInit {
   deleteReaction(id: number) {
     this._reactionService.deleteReaction(id).subscribe(
       result => {
+        this.alertService.success('Reactie verwijderd');
         this.loadReactions();
       }
     );

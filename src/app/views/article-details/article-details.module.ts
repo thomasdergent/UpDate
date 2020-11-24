@@ -24,6 +24,9 @@ import { AlertModule } from 'ngx-alerts';
     BrowserAnimationsModule,
     BrowserModule,
     AlertModule,
+ 
+    // Specify your library as an import (set timeout to -1 for unlimited timeout, the message can only be closed by the user clicking on it)
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top'}),
   ]
 })
 export class ArticleDetailsModule { }

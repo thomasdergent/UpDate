@@ -10,6 +10,7 @@ import { UserInformationService } from 'src/app/services/userService/user-inform
 import { UserService } from 'src/app/services/userService/user.service';
 import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
 import { Router } from '@angular/router';
+import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-addarticle',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class AddarticleComponent implements OnInit {
 
-  article: Article = new Article(0, "", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
   currentUserID: number;
   tags: Tag[];
   currentTag: Tag;
@@ -33,7 +34,8 @@ export class AddarticleComponent implements OnInit {
     private _articleStatusService: ArticleStatusService,
     private _tagService: TagService,
     private _userService: UserService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService,
   ) {
 
 
@@ -41,9 +43,7 @@ export class AddarticleComponent implements OnInit {
       this.currentUser = currentUser;
     });
 
-    setTimeout(function () {
-      this.getTags();
-    }.bind(this), 500);
+    this.getTags();
   }
 
   user = getUserFromLocalStorage();
@@ -70,23 +70,22 @@ export class AddarticleComponent implements OnInit {
     this._tagService.getTagByID(this.selectedTag).subscribe(
       result => {
         this.currentTag = result;
+
+        this._articleStatusService.getArticleStatusByID(1).subscribe(
+          result => {
+            this.articleStatusDraft = result;
+
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+              this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft)
+
+            this._articleService.addArticle(article).subscribe();
+
+            this.alertService.success('Artikel opgeslagen');
+            this.router.navigate(['/journalist/dashboard']);
+          }
+        );
       }
     );
-
-    this._articleStatusService.getArticleStatusByID(1).subscribe(
-      result => {
-        this.articleStatusDraft = result;
-      }
-    );
-
-    setTimeout(function () {
-      const article = new Article(0, this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
-        this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft)
-
-      this._articleService.addArticle(article).subscribe();
-      this.router.navigate(['/journalist/dashboard']);
-
-    }.bind(this), 1000);
   }
 
   addArticleToReview() {
@@ -94,23 +93,23 @@ export class AddarticleComponent implements OnInit {
     this._tagService.getTagByID(this.selectedTag).subscribe(
       result => {
         this.currentTag = result;
+
+        this._articleStatusService.getArticleStatusByID(1).subscribe(
+          result => {
+            this.articleStatusToReview = result;
+
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+              this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 2, this.articleStatusToReview)
+
+            this._articleService.addArticle(article).subscribe();
+
+            this.alertService.success('Artikel ingezonden');
+            this.router.navigate(['/journalist/dashboard']);
+          }
+        );
+
       }
     );
-
-    this._articleStatusService.getArticleStatusByID(1).subscribe(
-      result => {
-        this.articleStatusToReview = result;
-      }
-    );
-
-    setTimeout(function () {
-      const article = new Article(0, this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
-        this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 2, this.articleStatusToReview)
-
-      this._articleService.addArticle(article).subscribe();
-
-      this.router.navigate(['/journalist/dashboard']);
-    }.bind(this), 1000);
   }
 
   ngOnInit(): void {

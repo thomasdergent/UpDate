@@ -8,6 +8,8 @@
 
 
 <body>
+    
+    <ngx-alerts></ngx-alerts>  
     <section id="manage-tags">
         <div class="container">
 
@@ -43,10 +45,10 @@
                                 <td>{{tag.name}}</td>
                                 <td>
 
-                                    <a (click)="editTag(tag.tagID)" class="edit" data-toggle="modal"><i
+                                    <a (click)="openEdit(tag.tagID)" class="edit" data-toggle="modal"><i
                                             class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                    <a (click)="deleteTag(tag.tagID)" class="delete" data-toggle="modal"><i
+                                    <a (click)="openDelete(tag.tagID)" class="delete" data-toggle="modal"><i
                                             class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                             </tr>
@@ -90,9 +92,9 @@
         <div id="editTag" class="modal fade">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form ngNativeValidate (ngSubmit)="onSubmitEditTag()">
+                    <form ngNativeValidate (ngSubmit)="onSubmitEdit()">
                         <div class="modal-header">
-                            <h4 class="modal-title">Bewerk {{currentTag.name}}</h4>
+                            <h4 class="modal-title">Bewerk</h4>
                             <button type="button" class="close" data-dismiss="modal"
                                 (click)="closeEdit()">&times;</button>
                         </div>
@@ -117,7 +119,7 @@
         <div id="deleteTag" class="modal fade">
             <div class="modal-dialog  modal-dialog-centered">
                 <div class="modal-content">
-                    <form (ngSubmit)="onSubmitDeleteTag()">
+                    <form (ngSubmit)="onSubmitDelete()">
                         <div class="modal-header">
                             <h4 class="modal-title">Verwijder {{currentTag.name}} ?</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"

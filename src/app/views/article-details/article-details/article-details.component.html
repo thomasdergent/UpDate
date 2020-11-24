@@ -39,8 +39,13 @@
     </div>
 
     <div>
-        <a (click)="addLikeorDislike()" class="publish" data-toggle="modal">{{numberLikes}} <i class="material-icons"
+        <a *ngIf="roleAuthenticate.isLoggedIn()" (click)="addLikeorDislike()" class="publish" data-toggle="modal">{{numberLikes}} <i class="material-icons"
                 data-toggle="tooltip" title="Like">&#xe8dc;</i></a>
+    </div>
+    <div>
+        <a *ngIf="!roleAuthenticate.isLoggedIn()" class="publish" data-toggle="modal">{{numberLikes}} <i class="material-icons"
+                data-toggle="tooltip" title="Like">&#xe8dc;</i></a>
+                <p *ngIf="!roleAuthenticate.isLoggedIn()" class="text-muted">Log in om te liken</p>
     </div>
 
     <div class="row">
@@ -55,7 +60,8 @@
                             <textarea type="text" [(ngModel)]="comment" name="body" class="form-control"
                                 placeholder=" Voeg reactie toe" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Reageer</button>
+                        <button [disabled]="!roleAuthenticate.isLoggedIn()" type="submit" class="btn btn-primary">Reageer</button>
+                        <p *ngIf="!roleAuthenticate.isLoggedIn()" class="text-muted">Log in om te reageren</p>
                     </form>
                 </div>
             </div>
@@ -70,7 +76,7 @@
                     <h5 class="mt-0">{{reaction.user.userName}}</h5>
                     {{reaction.body}}
                     <p>
-                        <a *ngIf="reaction.user.userID==user.userID" (click)="deleteReaction(reaction.reactionID)"
+                        <a *ngIf="roleAuthenticate.isLoggedIn() && reaction.user.userID==user.userID" (click)="deleteReaction(reaction.reactionID)"
                             class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
                                 title="Delete">&#xE872;</i></a>
                     </p>

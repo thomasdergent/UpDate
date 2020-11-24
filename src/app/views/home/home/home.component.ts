@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   tags: Tag[];
   tagID: number;
   articlesPublished: Article[];
+  articlesPublishedByLikes: Article[];
 
   constructor(
     private _tagService: TagService,
@@ -35,7 +36,8 @@ export class HomeComponent implements OnInit {
   getArticlesPublished() {
     this._articleService.getArticlesPublished().subscribe(
       result => {
-        this.articlesPublished = result;
+        //reverse is omgekeerde array, slice is laatste items tonen met max getal
+        this.articlesPublished = result.reverse().slice(0,15);
       }
     );
   }

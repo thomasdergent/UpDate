@@ -6,6 +6,7 @@ import { ArticleStatusService } from 'src/app/services/articleStatusService/arti
 import { UserInformationService } from 'src/app/services/userService/user-information.service';
 import { Articlestatus } from 'src/app/models/articlestatus/articlestatus.model'
 import { getUserFromLocalStorage } from 'src/app/models/user/user.model';
+import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-journalist-dashboard',
@@ -16,27 +17,23 @@ export class JournalistDashboardComponent implements OnInit {
 
   articleStatus: Articlestatus;
   articles: Article[];
-  currentArticle: Article = new Article(0, "", "", "", "", 0, null, 0, null, 0, null);
+  currentArticle: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
   onSubmitDeleteArticle: boolean = false;
+  user= getUserFromLocalStorage();
 
   constructor(
     private _userInformationService: UserInformationService,
     private _articleService: ArticleService,
     private _articleStatusService: ArticleStatusService,
+    private alertService: AlertService,
   ) {
-
-    setTimeout(function () {
-      this.getArticles();
-    }.bind(this), 500);
+ this.getArticles();
   }
-
-  user= getUserFromLocalStorage();
 
   getArticles() {
     this._articleService.getArticlesByUserID(this.user.userID).subscribe(
       result => {
         this.articles = result;
-        localStorage.setItem("dlfkjdf", JSON.stringify(result));
       }
     );
   }
@@ -59,8 +56,17 @@ export class JournalistDashboardComponent implements OnInit {
   deleteCurrentArticle() {
     this.onSubmitDeleteArticle = true;
 
-    this._articleService.deleteArticle(this.currentArticle.articleID).subscribe();
-    window.location.reload();
+    this._articleService.deleteArticle(this.currentArticle.articleID).subscribe(
+      result=>{
+        this.getArticles();
+            this.getArticles();
+            this.alertService.success('Artikel verwijderd');
+      }
+    );
+    let modal = document.getElementById('deleteArticle')
+    modal.classList.remove('show')
+    modal.classList.add('hidden')
+
   }
 
   closeDelete() {
@@ -70,6 +76,7 @@ export class JournalistDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getArticles();
   }
 
 }

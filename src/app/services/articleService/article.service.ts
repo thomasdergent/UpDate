@@ -38,10 +38,13 @@ export class ArticleService {
     return this.http.get<Article[]>("https:localhost:44348/api/Article/review/articles");
   }
 
+  getArticlesPublishedByLikes(): Observable<Article[]>{
+    return this.http.get<Article[]>("https:localhost:44348/api/Article/published/likes/articles");
+  }
+
   getArticlesPublished(): Observable<Article[]>{
     return this.http.get<Article[]>("https:localhost:44348/api/Article/published/articles");
   }
-
 
   getArticlesPublishedByTag(tagName: string): Observable<Article[]>{
     return this.http.get<Article[]>("https:localhost:44348/api/Article/published/articles/" + tagName);

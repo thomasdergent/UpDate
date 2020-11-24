@@ -17,10 +17,10 @@ import { AlertModule } from 'ngx-alerts';
 @NgModule({
   declarations: [AddarticleComponent],
   imports: [
-    CommonModule,
     FormsModule,
     HttpClientModule,
-
+    ReactiveFormsModule,
+    CommonModule,
     BrowserAnimationsModule,
     BrowserModule,
  

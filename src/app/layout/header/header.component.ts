@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertService } from 'ngx-alerts';
 import { Tag } from 'src/app/models/tag/tag.model';
 import { CurrentUser } from 'src/app/models/user/current-user.model';
 import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
@@ -15,22 +16,20 @@ import { UserService } from 'src/app/services/userService/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  loggedIn: boolean = false;
-  userAdministrator = false;
-  currentUser: CurrentUser;
-  user: User = new User(0, "", "", "", "", "", "", 0, null);
-  notLoggedIn: boolean = false;
-  notSignedUp: boolean = false;
+  user: User=new User("","","","","","")
   tags: Tag[];
 
-
   constructor(
-    private _userService: UserService,
-    private _userInformationService: UserInformationService,
-    private _tagService: TagService,
     private router: Router,
+    public roleAuthenticateService: RoleAuthenticateService,
+  private alertService: AlertService,    
+  private tagService: TagService,
   ) {
     this.getTags();
+  }
+
+  getUser(){
+    this.user=getUserFromLocalStorage();
   }
 
   navbarOpen = false;
@@ -39,16 +38,14 @@ export class HeaderComponent implements OnInit {
     this.navbarOpen = !this.navbarOpen;
   }
 
-  
-
   logout() {
     localStorage.clear();
-    this.router.navigate(['/']);
-    window.location.reload();
+    this.alertService.success('U bent uitgelogd');
+    this.router.navigate(['/home']);
   }
 
   getTags(){
-    this._tagService.getTags().subscribe(
+    this.tagService.getTags().subscribe(
       result=>{
         this.tags=result;
       }
@@ -56,17 +53,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = getUserFromLocalStorage();
-
-    if (localStorage != null) {
-      this.notLoggedIn = true;
-      this.loggedIn=true;
-    }
-
-    if (localStorage != null && this.loggedIn==true) {
-      this.notSignedUp = true;
-    }
-
   }
 
 }

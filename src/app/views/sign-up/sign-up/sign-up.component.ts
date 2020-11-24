@@ -12,13 +12,13 @@ import { AlertService } from 'ngx-alerts';
 })
 export class SignUpComponent implements OnInit {
   submitted: boolean = false;
-  user: User = new User(0, '', '', '', '', '', null, 1);
+  user: User=new User("","","","","","",1)
 
   constructor(
-    private _userService: UserService, 
+    private _userService: UserService,
     private alertService: AlertService,
     private router: Router
-    ) {
+  ) {
     localStorage.clear();
   }
 
@@ -27,12 +27,12 @@ export class SignUpComponent implements OnInit {
     this.alertService.info('Gebruiker toevoegen');
 
     setTimeout(function () {
-    this._userService.addUser(this.user).subscribe();
-    this.alertService.success('Bedankt voor u registratie ' + this.user.userName + "!");
-    setTimeout(function () {
-      this.router.navigate(['/']);
+      this._userService.addUser(this.user).subscribe();
+      this.alertService.success('Bedankt voor u registratie ' + this.user.userName + "!");
+      setTimeout(function () {
+        this.router.navigate(['/']);
+      }.bind(this), 1500);
     }.bind(this), 1500);
-  }.bind(this), 1500);
   }
 
   ngOnInit(): void {

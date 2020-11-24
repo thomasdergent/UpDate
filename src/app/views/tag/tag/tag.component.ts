@@ -23,26 +23,26 @@ export class TagComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
 
-    setTimeout(() => {
-      this.loadTag();
-    }, 250);
-
-    setTimeout(() => {
+    this.loadTag();
       this.getTags();
-    }, 500);
-
-    setTimeout(() => {
-      this.getArticlesPublishedByTagName();
-    }, 500);
     
   }
 
+  getArticlesPublishedByTagName() {
+    this._articleService.getArticlesPublishedByTag(this.tag.name).subscribe(
+      result => {
+        this.articlesPublished = result;
+      }
+    );
+  }
 
   loadTag() {
     const tag = this.route.snapshot.paramMap.get('tagName');
     this._tagService.getTagByTagName(tag).subscribe(
       result => {
         this.tag = result;
+
+        this.getArticlesPublishedByTagName();
       }
     );
   }
@@ -55,35 +55,17 @@ export class TagComponent implements OnInit {
     );
   }
 
-  getArticlesPublishedByTagName() {
-    this._articleService.getArticlesPublishedByTag(this.tag.name).subscribe(
-      result => {
-        this.articlesPublished = result;
-      }
-    );
-  }
-
   loadNewTag(tagName: string) {
     this._tagService.getTagByTagName(tagName).subscribe(
       result => {
         this.tag = result;
+
+        this.getArticlesPublishedByTagName();
+        this.router.navigate(['/home/categorie/', this.tag.name]);
       }
     );
 
-    setTimeout(() => {
-      this._articleService.getArticlesPublishedByTag(this.tag.name).subscribe(
-        result=>{
-          this.articlesPublished=result;
-       
-        }
-      )
-    }, 250);
-   
-    setTimeout(() => {
-      this.router.navigate(['/home/categorie/', this.tag.name]);
-    }, 500);
-   
-  }
+    }
 
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getUserFromLocalStorage } from 'src/app/models/user/user.model';
+import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
 import decode from 'jwt-decode';
 import { CurrentUser } from 'src/app/models/user/current-user.model';
 import { UserInformationService } from '../userService/user-information.service';
@@ -9,27 +9,33 @@ import { UserInformationService } from '../userService/user-information.service'
 })
 export class RoleAuthenticateService {
 
- user = getUserFromLocalStorage();
- currentUser: CurrentUser;
+  user: User;
 
   constructor(
     private _userInformationService: UserInformationService,
   ) {
-    this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
-      this.currentUser = currentUser;
-    });
+    this.getInfo();
    }
 
+   getInfo(){
+    if (localStorage.getItem("user") !=null){
+      this.user = getUserFromLocalStorage();
+     }
+   }
+  
   isUser() {
-    const role = this.user.role;
-    if (role.name == "User") {
-      return true;
-    } else {
-      return false;
+    if (localStorage.getItem("user") !=null){
+      const role = this.user.role;
+      if (role.name == "User") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
   isJournalist() {
+    if (localStorage.getItem("user") !=null){
     const role = this.user.role;
     if (role.name == "Journalist") {
       return true;
@@ -37,8 +43,10 @@ export class RoleAuthenticateService {
       return false;
     }
   }
+  }
 
   isAdministrator() {
+    if (localStorage.getItem("user") !=null){
     const role = this.user.role;
     if (role.name == "Admin") {
       return true;
@@ -46,4 +54,22 @@ export class RoleAuthenticateService {
       return false;
     }
   }
+  }
+
+  isLoggedIn(){
+    if (localStorage.getItem("user") !=null){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isNotLoggedIn(){
+    if (localStorage.getItem("user") ==null){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

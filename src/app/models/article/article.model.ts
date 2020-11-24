@@ -6,7 +6,6 @@ import { ArticleService } from 'src/app/services/articleService/article.service'
 
 export class Article {
     constructor(
-        public articleID: number,
         public title: string,
         public subTitle: string,
         public shortSummary: string,
@@ -16,7 +15,8 @@ export class Article {
         public userID: number,
         public user: User,
         public articleStatusID: number,
-        public articleStatus: Articlestatus
+        public articleStatus: Articlestatus,
+        public articleID?: number,
     ) {}
 
 }

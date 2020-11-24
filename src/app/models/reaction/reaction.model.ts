@@ -1,6 +1,5 @@
 import { Article } from '../article/article.model';
 import { User } from '../user/user.model';
-import { Comment } from '../comment/comment.model';
 
 export class Reaction {
     reactionID: number;
