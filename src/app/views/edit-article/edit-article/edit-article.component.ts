@@ -10,6 +10,7 @@ import { ArticleService } from 'src/app/services/articleService/article.service'
 import { ArticleStatusService } from 'src/app/services/articleStatusService/article-status.service';
 import { TagService } from 'src/app/services/tagService/tag.service';
 import { UserInformationService } from 'src/app/services/userService/user-information.service';
+import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-edit-article',
@@ -18,7 +19,7 @@ import { UserInformationService } from 'src/app/services/userService/user-inform
 })
 export class EditArticleComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "","", 0, null, 0, null, 0, null);
   tags: Tag[];
   selectedTag: number;
   articleStatusDraft: Articlestatus;
@@ -57,6 +58,41 @@ export class EditArticleComponent implements OnInit {
     );
   }
 
+  onChange($event: Event){
+    const file = ($event.target as HTMLInputElement).files[0];
+    console.log(file);
+    this.convertToBase64(file);
+
+  }
+
+  convertToBase64(file:File){
+    const observable = new Observable((subscriber: Subscriber<any>) =>{
+
+      this.readFile(file, subscriber);
+    });
+    observable.subscribe((d) =>{
+      console.log(d);
+      this.article.image= d;
+    })
+  }
+
+  readFile(file: File, subscriber: Subscriber<any>){
+    const filereader=new FileReader();
+
+    filereader.readAsDataURL(file)
+
+    filereader.onload = ()=>{
+
+      subscriber.next(filereader.result); 
+      subscriber.complete();
+    };
+
+    filereader.onerror = (error)=>{
+      subscriber.error(error);
+      subscriber.complete();
+    }
+  }
+
   addArticleDraft() {
     //Ophalen van de geselecteerde id in de listbox
     this._tagService.getTagByID(this.selectedTag).subscribe(
@@ -67,7 +103,7 @@ export class EditArticleComponent implements OnInit {
           result => {
             this.articleStatusDraft = result;
 
-            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body, this.article.image,
               this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft, this.article.articleID)
 
             this._articleService.updateArticle(this.article.articleID, article).subscribe();
@@ -89,7 +125,7 @@ export class EditArticleComponent implements OnInit {
         this._articleStatusService.getArticleStatusByID(1).subscribe(
           result => {
             this.articleStatusToReview = result;
-            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body, this.article.image,
               this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 2, this.articleStatusToReview, this.article.articleID)
 
             this._articleService.updateArticle(this.article.articleID, article).subscribe();

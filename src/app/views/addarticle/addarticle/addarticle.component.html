@@ -45,6 +45,9 @@
                                 class="form-control" required />
                         </div>
                         <div class="form-group col-md-6">
+                            <label for="image">Kies een afbeelding</label>
+                            <input type="file" [(ngModel)]="article.image" name="image" class="form-control " (change)="onChange($event)" required/>
+                            <img [src]="myImage" class="articleImage" alt="">  
                         </div>
                     </div>
                     <div class="form-group">

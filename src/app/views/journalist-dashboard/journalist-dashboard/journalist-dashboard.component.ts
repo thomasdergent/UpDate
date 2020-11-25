@@ -17,7 +17,7 @@ export class JournalistDashboardComponent implements OnInit {
 
   articleStatus: Articlestatus;
   articles: Article[];
-  currentArticle: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
+  currentArticle: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
   onSubmitDeleteArticle: boolean = false;
   user= getUserFromLocalStorage();
 
@@ -43,8 +43,6 @@ export class JournalistDashboardComponent implements OnInit {
     this._articleService.getArticleByID(id).subscribe(
       result => {
         this.currentArticle = result;
-
-        localStorage.setItem("delete", JSON.stringify(result));
       }
     );
 

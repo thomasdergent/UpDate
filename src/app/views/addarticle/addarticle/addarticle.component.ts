@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/userService/user.service';
 import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
+import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-addarticle',
@@ -19,7 +20,7 @@ import { AlertService } from 'ngx-alerts';
 })
 export class AddarticleComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", "",0, null, 0, null, 0, null);
   currentUserID: number;
   tags: Tag[];
   currentTag: Tag;
@@ -27,6 +28,7 @@ export class AddarticleComponent implements OnInit {
   selectedTag: number;
   articleStatusDraft: Articlestatus;
   articleStatusToReview: Articlestatus;
+  myImage;
 
   constructor(
     private _articleService: ArticleService,
@@ -56,6 +58,42 @@ export class AddarticleComponent implements OnInit {
     );
   }
 
+  
+  onChange($event: Event){
+    const file = ($event.target as HTMLInputElement).files[0];
+    console.log(file);
+    this.convertToBase64(file);
+
+  }
+
+  convertToBase64(file:File){
+    const observable = new Observable((subscriber: Subscriber<any>) =>{
+
+      this.readFile(file, subscriber);
+    });
+    observable.subscribe((d) =>{
+      console.log(d);
+      this.myImage= d;
+    })
+  }
+
+  readFile(file: File, subscriber: Subscriber<any>){
+    const filereader=new FileReader();
+
+    filereader.readAsDataURL(file)
+
+    filereader.onload = ()=>{
+
+      subscriber.next(filereader.result); 
+      subscriber.complete();
+    };
+
+    filereader.onerror = (error)=>{
+      subscriber.error(error);
+      subscriber.complete();
+    }
+  }
+
   //To Review
   getArticleStatusByIDToReview() {
     this._articleStatusService.getArticleStatusByID(2).subscribe(
@@ -75,7 +113,7 @@ export class AddarticleComponent implements OnInit {
           result => {
             this.articleStatusDraft = result;
 
-            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body, this.myImage,
               this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 1, this.articleStatusDraft)
 
             this._articleService.addArticle(article).subscribe();
@@ -98,7 +136,7 @@ export class AddarticleComponent implements OnInit {
           result => {
             this.articleStatusToReview = result;
 
-            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+            const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body, this.myImage,
               this.currentTag.tagID, this.currentTag, this.user.userID, this.user, 2, this.articleStatusToReview)
 
             this._articleService.addArticle(article).subscribe();
@@ -110,6 +148,7 @@ export class AddarticleComponent implements OnInit {
 
       }
     );
+  
   }
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ export class Article {
         public subTitle: string,
         public shortSummary: string,
         public body: string,
+        public image: string,
         public tagID: number,
         public tag: Tag,
         public userID: number,

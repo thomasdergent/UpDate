@@ -13,7 +13,7 @@ import { ArticleStatusService } from 'src/app/services/articleStatusService/arti
 })
 export class PublishArticleComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", "",0, null, 0, null, 0, null);
   articleStatusPublish: Articlestatus = new Articlestatus(0, null);
 
   constructor(
@@ -42,7 +42,7 @@ export class PublishArticleComponent implements OnInit {
       result => {
         this.articleStatusPublish = result;
 
-        const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body,
+        const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body, this.article.image,
           this.article.tag.tagID, this.article.tag, this.article.user.userID, this.article.user, 3, this.articleStatusPublish, this.article.articleID)
 
           

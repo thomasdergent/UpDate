@@ -20,7 +20,7 @@ import { AlertService } from 'ngx-alerts';
 })
 export class ArticleDetailsComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
   comment: string;
   currentLikes: Like[];
   usersLike = [];
@@ -91,6 +91,8 @@ export class ArticleDetailsComponent implements OnInit {
       const like = new Like(1, this.user.userID, this.article.articleID);
       this._likeService.addLike(like).subscribe(
         result => {
+          this.alertService.success('Vind ik leuk');
+          this.numberLikes = 0;
           this.getLikes();
         }
       );

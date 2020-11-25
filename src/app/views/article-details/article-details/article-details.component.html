@@ -12,7 +12,8 @@
 <section id="detailsArticle" class="detailsArticle">
     <div class="section-title" data-aos="fade-left">
         <h2>{{article.title}}</h2>
-        <p style="font-style: italic;">door {{article.user.firstName}} {{article.user.lastName}}</p>
+        <p style="font-style: italic;">door {{article.user.firstName}} {{article.user.lastName}}</p> 
+        
     </div>
 
     <div class="row">
@@ -20,6 +21,11 @@
             <hr>
             <p>{{article.tag.name}}</p>
             <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <img class="articleImage shadow" [src]="article.image" alt="{{article.title}}">
         </div>
     </div>
     <div class="row">
@@ -57,7 +63,7 @@
                 <div class="card-body">
                     <form id="addCommentForm" ngNativeValidate (ngSubmit)="addComment()">
                         <div class="form-group">
-                            <textarea type="text" [(ngModel)]="comment" name="body" class="form-control"
+                            <textarea type="text" [disabled]="!roleAuthenticate.isLoggedIn()"  [(ngModel)]="comment" name="body" class="form-control"
                                 placeholder=" Voeg reactie toe" rows="3"></textarea>
                         </div>
                         <button [disabled]="!roleAuthenticate.isLoggedIn()" type="submit" class="btn btn-primary">Reageer</button>
