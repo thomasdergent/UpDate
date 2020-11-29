@@ -5,8 +5,8 @@ import { ArticleService } from 'src/app/services/articleService/article.service'
 import { ArticleStatusService } from 'src/app/services/articleStatusService/article-status.service';
 import { UserInformationService } from 'src/app/services/userService/user-information.service';
 import { Articlestatus } from 'src/app/models/articlestatus/articlestatus.model'
-import { getUserFromLocalStorage } from 'src/app/models/user/user.model';
 import { AlertService } from 'ngx-alerts';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-journalist-dashboard',
@@ -19,21 +19,34 @@ export class JournalistDashboardComponent implements OnInit {
   articles: Article[];
   currentArticle: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
   onSubmitDeleteArticle: boolean = false;
-  user= getUserFromLocalStorage();
+  user: CurrentUser;
+  loaded: boolean = false;
+  spinner: boolean = true;
 
   constructor(
     private _userInformationService: UserInformationService,
     private _articleService: ArticleService,
-    private _articleStatusService: ArticleStatusService,
     private alertService: AlertService,
   ) {
- this.getArticles();
+
+    this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
+      this.user = currentUser;
+      if (this.user){
+        this.getArticles();
+      }
+    });
+
   }
 
   getArticles() {
     this._articleService.getArticlesByUserID(this.user.userID).subscribe(
       result => {
-        this.articles = result;
+        this.articles = result.reverse();
+
+        if (result) {
+          this.loaded = true;
+          this.spinner = false;
+        }
       }
     );
   }
@@ -55,10 +68,10 @@ export class JournalistDashboardComponent implements OnInit {
     this.onSubmitDeleteArticle = true;
 
     this._articleService.deleteArticle(this.currentArticle.articleID).subscribe(
-      result=>{
+      result => {
         this.getArticles();
-            this.getArticles();
-            this.alertService.success('Artikel verwijderd');
+        this.getArticles();
+        this.alertService.success('Artikel verwijderd');
       }
     );
     let modal = document.getElementById('deleteArticle')
@@ -74,7 +87,6 @@ export class JournalistDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getArticles();
   }
 
 }

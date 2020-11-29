@@ -5,7 +5,6 @@ import { Article } from 'src/app/models/article/article.model';
 import { Articlestatus } from 'src/app/models/articlestatus/articlestatus.model';
 import { Tag } from 'src/app/models/tag/tag.model';
 import { CurrentUser } from 'src/app/models/user/current-user.model';
-import { getUserFromLocalStorage } from 'src/app/models/user/user.model';
 import { ArticleService } from 'src/app/services/articleService/article.service';
 import { ArticleStatusService } from 'src/app/services/articleStatusService/article-status.service';
 import { TagService } from 'src/app/services/tagService/tag.service';
@@ -19,13 +18,16 @@ import { Observable, Subscriber } from 'rxjs';
 })
 export class EditArticleComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "","", 0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
   tags: Tag[];
   selectedTag: number;
   articleStatusDraft: Articlestatus;
   articleStatusToReview: Articlestatus;
   currentUser: CurrentUser;
   currentTag: Tag;
+  user: CurrentUser;
+  loaded: boolean = false;
+  spinner: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,10 +37,13 @@ export class EditArticleComponent implements OnInit {
     private _articleStatusService: ArticleStatusService,
     private alertService: AlertService,
     private router: Router) {
+
+    this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
+      this.user = currentUser;
+    });
+
     this.getTags();
   }
-
-  user = getUserFromLocalStorage();
 
   loadArticle() {
     const articleTitle = this.route.snapshot.paramMap.get('title');
@@ -46,6 +51,8 @@ export class EditArticleComponent implements OnInit {
       result => {
         this.article = result;
         this.selectedTag = this.article.tagID;
+        this.spinner = false;
+        this.loaded = true;
       }
     );
   }
@@ -58,36 +65,36 @@ export class EditArticleComponent implements OnInit {
     );
   }
 
-  onChange($event: Event){
+  onChange($event: Event) {
     const file = ($event.target as HTMLInputElement).files[0];
     console.log(file);
     this.convertToBase64(file);
 
   }
 
-  convertToBase64(file:File){
-    const observable = new Observable((subscriber: Subscriber<any>) =>{
+  convertToBase64(file: File) {
+    const observable = new Observable((subscriber: Subscriber<any>) => {
 
       this.readFile(file, subscriber);
     });
-    observable.subscribe((d) =>{
+    observable.subscribe((d) => {
       console.log(d);
-      this.article.image= d;
+      this.article.image = d;
     })
   }
 
-  readFile(file: File, subscriber: Subscriber<any>){
-    const filereader=new FileReader();
+  readFile(file: File, subscriber: Subscriber<any>) {
+    const filereader = new FileReader();
 
     filereader.readAsDataURL(file)
 
-    filereader.onload = ()=>{
+    filereader.onload = () => {
 
-      subscriber.next(filereader.result); 
+      subscriber.next(filereader.result);
       subscriber.complete();
     };
 
-    filereader.onerror = (error)=>{
+    filereader.onerror = (error) => {
       subscriber.error(error);
       subscriber.complete();
     }

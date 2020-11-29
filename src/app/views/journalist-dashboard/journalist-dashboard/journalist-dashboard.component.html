@@ -8,7 +8,15 @@
 
 <body>
     <ngx-alerts></ngx-alerts>   
-    <section id="journalist-dashboard">
+
+
+    <div  *ngIf="spinner"> 
+        <div role="status"> 
+            <p id="loading"></p> 
+        </div> 
+    </div> 
+    
+    <section id="journalist-dashboard" *ngIf="loaded">
         <div class="container">
 
             <div class="section-title" data-aos="fade-left">

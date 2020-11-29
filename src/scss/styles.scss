@@ -57,6 +57,8 @@ $UpDate-theme: mat-light-theme((
 
 @import "./articleImage";
 
+@import "./spinner";
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
@@ -79,4 +81,3 @@ a:hover{
   cursor: pointer;
   text-decoration: none !important;
 }
-

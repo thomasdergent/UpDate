@@ -13,6 +13,8 @@ import { AddarticleModule } from './views/addarticle/addarticle.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HeaderComponent} from './layout/header/header.component'
+import { NgProgressModule } from 'ngx-progressbar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,7 @@ import {HeaderComponent} from './layout/header/header.component'
     AddarticleModule,
     BsDropdownModule.forRoot(),
     MatTabsModule,
+    NgProgressModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

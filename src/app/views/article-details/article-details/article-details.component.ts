@@ -5,13 +5,13 @@ import { ArticleService } from 'src/app/services/articleService/article.service'
 import { ArticleStatusService } from 'src/app/services/articleStatusService/article-status.service';
 import { TagService } from 'src/app/services/tagService/tag.service';
 import { UserInformationService } from 'src/app/services/userService/user-information.service';
-import { ReactionService } from '../../../services/reactionService/reaction.service'
-import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
+import { ReactionService } from '../../../services/reactionService/reaction.service';
 import { Reaction } from 'src/app/models/reaction/reaction.model';
 import { Like } from '../../../models/like/like.model';
 import { LikeService } from '../../../services/likeService/like.service'
 import { RoleAuthenticateService } from 'src/app/services/authenticateService/roleAuthenticate.service';
 import { AlertService } from 'ngx-alerts';
+import { CurrentUser } from 'src/app/models/user/current-user.model';
 
 @Component({
   selector: 'app-article-details',
@@ -20,29 +20,28 @@ import { AlertService } from 'ngx-alerts';
 })
 export class ArticleDetailsComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
+  article: Article;
   comment: string;
   currentLikes: Like[];
   usersLike = [];
   numberLikes = 0;
   submitted: boolean = false;
   reactions: Reaction[];
-  user: User;
+  user: CurrentUser;
+  loaded: boolean = false;
+  spinner: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private _articleService: ArticleService,
-    private _tagService: TagService,
     private _userInformationService: UserInformationService,
-    private _articleStatusService: ArticleStatusService,
     private _reactionService: ReactionService,
     private _likeService: LikeService,
     public roleAuthenticate: RoleAuthenticateService,
     private alertService: AlertService,
-    private router: Router) {
+  ) {
 
     this.loadArticle();
-
     this.loadReactions();
     this.getLikes();
     this.getUserInfo();
@@ -50,7 +49,10 @@ export class ArticleDetailsComponent implements OnInit {
 
   getUserInfo() {
     if (this.roleAuthenticate.isLoggedIn()) {
-      this.user = getUserFromLocalStorage();
+
+      this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
+        this.user = currentUser;
+      });
     }
   }
 
@@ -59,6 +61,8 @@ export class ArticleDetailsComponent implements OnInit {
     this._articleService.getArticleByTitlePublished(articleTitle).subscribe(
       result => {
         this.article = result;
+        this.spinner = false;
+        this.loaded = true;
       }
     );
   }
@@ -68,16 +72,15 @@ export class ArticleDetailsComponent implements OnInit {
       result => {
         this.reactions = result.reverse();
       }
-
-
     );
   }
+
   getLikes() {
     this._likeService.getLikesByArticleTitle(this.route.snapshot.paramMap.get('title')).subscribe(
       result => {
         this.currentLikes = result;
 
-        for (let i = 0; i < result.length; i++) {
+        for (let i = 0; i < this.currentLikes.length; i++) {
           this.numberLikes++;
 
         }
@@ -130,10 +133,6 @@ export class ArticleDetailsComponent implements OnInit {
 
 
   addComment() {
-    //this._commentService.addComment(this.comment).subscribe(data=>{
-
-
-    //});
     const reaction = new Reaction(this.comment, this.user.userID, this.article.articleID);
     this._reactionService.addReaction(reaction).subscribe(
       result => {
@@ -168,7 +167,6 @@ export class ArticleDetailsComponent implements OnInit {
       }
     );
   }
-
 
   ngOnInit(): void {
     this.loadReactions();

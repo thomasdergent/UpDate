@@ -8,8 +8,13 @@
 
 <ngx-alerts></ngx-alerts>
 
+<div  *ngIf="spinner"> 
+    <div role="status"> 
+        <p id="loading"></p> 
+    </div> 
+</div> 
 
-<section id="detailsArticle" class="detailsArticle">
+<section id="detailsArticle" class="detailsArticle" *ngIf="loaded">
     <div class="section-title" data-aos="fade-left">
         <h2>{{article.title}}</h2>
         <p style="font-style: italic;">door {{article.user.firstName}} {{article.user.lastName}}</p> 

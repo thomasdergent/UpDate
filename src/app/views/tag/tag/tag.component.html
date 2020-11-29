@@ -2,62 +2,71 @@
 
 
 <body>
-	<section id="tag">
 
-<!-- Page Content -->
-<div class="container">
-
-    <div class="section-title" data-aos="fade-left">
-        <h2>{{tag.name}}</h2>
+  <div *ngIf="spinner">
+    <div role="status">
+      <p id="loading"></p>
     </div>
+  </div>
 
-  <div class="row">
+  <section id="tag">
 
-    <!-- Post Content Column -->
-    <div class="col-md-10">
+    <!-- Page Content -->
+    <div class="container" *ngIf="loaded">
+
+      <div class="section-title" data-aos="fade-left">
+        <h2>{{tag.name}}</h2>
+      </div>
 
       <div class="row">
-        <div *ngFor="let articlePublished of articlesPublished" class="col-md-6 card-margin">
-          <div class="card my-4 bootstrapCard shadow h-100">
-            <div class="card-header">
-              {{articlePublished.tag.name}}
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"> {{articlePublished.title}}</h5>
-              <p class="card-text">{{articlePublished.shortSummary}}</p>
-              <p class="card-text" style="font-style: italic;">door {{articlePublished.user.firstName}} {{articlePublished.user.lastName}}</p>
-              <a routerLink="/article/{{articlePublished.title}}" class="btn btn-primary">Lees verder</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Sidebar Widgets Column -->
-    <div class="col-md-2">
+        <!-- Post Content Column -->
+        <div class="col-md-10">
 
-      <!-- Categories Widget -->
-      <div class="card my-4 bootstrapCard shadow links">
-        <div class="card-header">Categorieën</div>
-        <div class="card-body">
           <div class="row">
-            <ul class="list-unstyled col-md-6" *ngFor="let tag of tags">
-              <li class="col-md-12">
-                <a (click)="loadNewTag(tag.name)">{{tag.name}}</a>
-              </li>
+            <div *ngFor="let articlePublished of articlesPublished" class="col-md-4 order-sm-12 card-margin">
+              <div class="card my-4 shadow bootstrapCard h-100">
+                <div class="card-header">
+                  {{articlePublished.tag.name}}
+                </div>
+                <img class="homeImage" [src]="articlePublished.image">
+                <div class="card-body">
+                  <h5 class="card-title"> {{articlePublished.title}}</h5>
 
-            </ul>
+                  <p class="card-text" style="font-style: italic;">door {{articlePublished.user.firstName}}
+                    {{articlePublished.user.lastName}}</p>
+
+                </div>
+                <div class="card-footer">
+                  <a routerLink="/article/{{articlePublished.title}}" class="btn btn-primary">Lees verder</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-2">
+
+          <!-- Categories Widget -->
+          <div class="card my-4 order-sm-1 bootstrapCard links shadow">
+            <div class="card-header">Categorieën</div>
+            <div class="card-body text-left">
+              <div *ngFor="let tag of tags">
+                <p>
+                  <a (click)="loadNewTag(tag.name)"><i class="material-icons" data-toggle="tooltip"
+                      title="Categorie">&#xe5df;</i>{{tag.name}}</a>
+                <p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+      <!-- /.row -->
 
     </div>
+    <!-- /.container -->
 
-  </div>
-  <!-- /.row -->
-
-</div>
-<!-- /.container -->
-
-</section>
+  </section>
 </body>

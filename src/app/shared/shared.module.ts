@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
 import {SignUpModule} from '../views/sign-up/sign-up.module';
 import {LoginModule} from '../views/login/login.module';
-import {AdministratorModule} from '../views/administrator/administrator.module';
-import {ArticleModule} from '../views/article/article.module';
 import {AddarticleModule} from '../views/addarticle/addarticle.module';
 import {AdminDashboardModule} from '../views/admin-dashboard/admin-dashboard.module'
 import {JournalistCRUDModule} from '../views/journalist-crud/journalist-crud.module'
@@ -19,6 +17,7 @@ import {ManageArticlesModule} from '../views/manage-articles/manage-articles.mod
 import {PublishArticleModule} from '../views/publish-article/publish-article.module'
 import {HomeModule} from '../views/home/home.module'
 import {TagModule} from '../views/tag/tag.module'
+import { NgProgressModule } from 'ngx-progressbar';
 
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -36,8 +35,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     AppRoutingModule,
     SignUpModule,
     LoginModule,
-    AdministratorModule,
-    ArticleModule,
     AddarticleModule,
     AdminDashboardModule,
     JournalistCRUDModule,
@@ -49,7 +46,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     PublishArticleModule,
     ArticleDetailsModule,
     HomeModule,
+    TagModule,
+    BrowserModule,
     BsDropdownModule.forRoot(),
+    NgProgressModule,
  
     // Specify your library as an import (set timeout to -1 for unlimited timeout, the message can only be closed by the user clicking on it)
     AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top'})

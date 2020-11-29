@@ -13,8 +13,10 @@ import { ArticleStatusService } from 'src/app/services/articleStatusService/arti
 })
 export class PublishArticleComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", "",0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
   articleStatusPublish: Articlestatus = new Articlestatus(0, null);
+  loaded: boolean = false;
+  spinner: boolean = true;
 
   constructor(
     private _articleService: ArticleService,
@@ -31,12 +33,13 @@ export class PublishArticleComponent implements OnInit {
     this._articleService.getArticleByTitleToReview(articleTitle).subscribe(
       result => {
         this.article = result;
+        this.spinner = false;
+        this.loaded = true;
       }
     )
   }
 
   addArticlePublished() {
-
 
     this._articleStatusService.getArticleStatusByID(3).subscribe(
       result => {
@@ -45,12 +48,10 @@ export class PublishArticleComponent implements OnInit {
         const article = new Article(this.article.title, this.article.subTitle, this.article.shortSummary, this.article.body, this.article.image,
           this.article.tag.tagID, this.article.tag, this.article.user.userID, this.article.user, 3, this.articleStatusPublish, this.article.articleID)
 
-          
-
         this._articleService.updateArticle(this.article.articleID, article).subscribe();
 
-          this.alertService.success('Artikel gepubliceert');
-          this.router.navigate(['/admin/dashboard/articles']);
+        this.alertService.success('Artikel gepubliceert');
+        this.router.navigate(['/admin/dashboard/articles']);
       }
     );
   }

@@ -7,8 +7,6 @@ import { ArticleService } from 'src/app/services/articleService/article.service'
 import { TagService } from '../../../services/tagService/tag.service'
 import { ArticleStatusService } from 'src/app/services/articleStatusService/article-status.service'
 import { UserInformationService } from 'src/app/services/userService/user-information.service';
-import { UserService } from 'src/app/services/userService/user.service';
-import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
 import { Observable, Subscriber } from 'rxjs';
@@ -20,7 +18,7 @@ import { Observable, Subscriber } from 'rxjs';
 })
 export class AddarticleComponent implements OnInit {
 
-  article: Article = new Article("", "", "", "", "",0, null, 0, null, 0, null);
+  article: Article = new Article("", "", "", "", "", 0, null, 0, null, 0, null);
   currentUserID: number;
   tags: Tag[];
   currentTag: Tag;
@@ -29,26 +27,25 @@ export class AddarticleComponent implements OnInit {
   articleStatusDraft: Articlestatus;
   articleStatusToReview: Articlestatus;
   myImage;
+  user: CurrentUser;
 
   constructor(
     private _articleService: ArticleService,
     private _userInformationService: UserInformationService,
     private _articleStatusService: ArticleStatusService,
     private _tagService: TagService,
-    private _userService: UserService,
     private router: Router,
     private alertService: AlertService,
   ) {
 
 
     this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
-      this.currentUser = currentUser;
+      this.user = currentUser;
     });
 
     this.getTags();
   }
 
-  user = getUserFromLocalStorage();
 
   getTags() {
     this._tagService.getTags().subscribe(
@@ -58,37 +55,35 @@ export class AddarticleComponent implements OnInit {
     );
   }
 
-  
-  onChange($event: Event){
+
+  onChange($event: Event) {
     const file = ($event.target as HTMLInputElement).files[0];
-    console.log(file);
     this.convertToBase64(file);
 
   }
 
-  convertToBase64(file:File){
-    const observable = new Observable((subscriber: Subscriber<any>) =>{
+  convertToBase64(file: File) {
+    const observable = new Observable((subscriber: Subscriber<any>) => {
 
       this.readFile(file, subscriber);
     });
-    observable.subscribe((d) =>{
-      console.log(d);
-      this.myImage= d;
+    observable.subscribe((d) => {
+      this.myImage = d;
     })
   }
 
-  readFile(file: File, subscriber: Subscriber<any>){
-    const filereader=new FileReader();
+  readFile(file: File, subscriber: Subscriber<any>) {
+    const filereader = new FileReader();
 
     filereader.readAsDataURL(file)
 
-    filereader.onload = ()=>{
+    filereader.onload = () => {
 
-      subscriber.next(filereader.result); 
+      subscriber.next(filereader.result);
       subscriber.complete();
     };
 
-    filereader.onerror = (error)=>{
+    filereader.onerror = (error) => {
       subscriber.error(error);
       subscriber.complete();
     }
@@ -148,7 +143,7 @@ export class AddarticleComponent implements OnInit {
 
       }
     );
-  
+
   }
 
   ngOnInit(): void {

@@ -8,8 +8,14 @@
 
 <ngx-alerts></ngx-alerts>
 
+<div  *ngIf="spinner"> 
+    <div role="status"> 
+        <p id="loading"></p> 
+    </div> 
+</div> 
 
-<section id="publishArticle" class="detailsArticle">
+<section id="publishArticle" class="detailsArticle" >
+    <div class="container" *ngIf="loaded">
     <div class="section-title" data-aos="fade-left">
         <h2>{{article.title}}</h2>
         <p style="font-style: italic;">door {{article.user.firstName}} {{article.user.lastName}}</p>
@@ -43,4 +49,5 @@
         </div>
     </div>
     <button class="btn btn-primary" type="submit" (click)="addArticlePublished()">Publiceren</button>
+</div>
 </section>

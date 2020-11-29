@@ -15,6 +15,8 @@ export class TagComponent implements OnInit {
   articlesPublished: Article[];
   tag: Tag;
   tags: Tag[];
+  loaded: boolean=false;
+  spinner: boolean=true;
 
   constructor(
     private _tagService: TagService,
@@ -29,9 +31,13 @@ export class TagComponent implements OnInit {
   }
 
   getArticlesPublishedByTagName() {
+    this.spinner=true;
+    this.loaded=false;
     this._articleService.getArticlesPublishedByTag(this.tag.name).subscribe(
       result => {
-        this.articlesPublished = result;
+        this.articlesPublished = result.reverse();
+        this.spinner=false;
+        this.loaded=true;
       }
     );
   }
@@ -69,7 +75,7 @@ export class TagComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.loadTag();
   }
 
 }

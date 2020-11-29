@@ -3,11 +3,19 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AlertService } from 'ngx-alerts';
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router,     private alertService: AlertService, ) { 
+      
+  }
+
+  redirectTo(uri:string){
+    this._router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this._router.navigate([uri]));
+ }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       let token = localStorage.getItem("token");
@@ -19,11 +27,14 @@ export class LoginInterceptor implements HttpInterceptor {
               }
           });
       }   
+
+      
   
       return next.handle(request).pipe(
           catchError(err => {
-              if (err.status === 401) {
-                  this._router.navigate(['login']);
+              if (err.status === 400) {
+                this.alertService.warning('Er ging iets fout!');
+                  this.redirectTo('/login');
               }
               return throwError("unauthorized");
           })

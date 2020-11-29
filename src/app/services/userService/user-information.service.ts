@@ -11,8 +11,12 @@ export class UserInformationService {
 
   constructor(private _userService: UserService) { }
 
+  
   getUserInfo(_callback) {
 
+    if (localStorage.getItem("token")!=null){
+
+    
     setTimeout(function () {
       const userInfo = this._userService.decode();
 
@@ -25,14 +29,11 @@ export class UserInformationService {
 
       const role: Role = new Role(roleID, userInfo.role);
 
-      this.user = new CurrentUser(userID, userInfo.email, userInfo.userName, roleID, role );
+      this.user = new CurrentUser(userID, userInfo.email, userInfo.firstName, userInfo.lastName, userInfo.userName, roleID, role );
       _callback(this.user as CurrentUser);
 
-      localStorage.setItem("usertest", JSON.stringify(this.user)),
       
-      localStorage.setItem("userInfo", this.user.role.name);
-
-      
-    }.bind(this), 500);
+    }.bind(this), 0);
+  }
   }
 }

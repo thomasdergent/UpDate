@@ -46,6 +46,8 @@ export class UserService {
   }
 
   decode() {
-    return decode(localStorage.getItem('token'));
+    if (localStorage.getItem("token") !=null){
+      return decode(localStorage.getItem('token'));
+    }
   }
 }

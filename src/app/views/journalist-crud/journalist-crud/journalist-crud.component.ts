@@ -15,8 +15,8 @@ export class JournalistCRUDComponent implements OnInit {
   journalists: User[];
   //declareren als nieuwe user want anders laadt de pagina niet omdat modal als div in de pagina zit en niet in een ander com
   currentJournalist: User = new User('', '', '', '', '', '', 2);
-  journalist: User = new User('', '', '', '', '','', 2);
-  updateJournalist: User = new User('', '', '', '', '','', 2);
+  journalist: User = new User('', '', '', '', '', '', 2);
+  updateJournalist: User = new User('', '', '', '', '', '', 2);
   submitted: boolean = false;
   submitEditJournalist: boolean = false;
   onSubmitDeleteJournalist: boolean = false;
@@ -32,7 +32,7 @@ export class JournalistCRUDComponent implements OnInit {
   getJournalists() {
     this._userService.getUsersByRole(2).subscribe(
       result => {
-        this.journalists = result;
+        this.journalists = result.reverse();
       }
     );
   }
@@ -94,10 +94,10 @@ export class JournalistCRUDComponent implements OnInit {
         let modal = document.getElementById('addJournalistModal')
         modal.classList.remove('show')
         modal.classList.add('hidden')
-        this.journalist = new User('', '', '', '', '','', 2);
+        this.journalist = new User('', '', '', '', '', '', 2);
         this.getJournalists();
 
-          this.alertService.success('Gebruiker toegevoegd');
+        this.alertService.success('Gebruiker toegevoegd');
       }
     );
   }

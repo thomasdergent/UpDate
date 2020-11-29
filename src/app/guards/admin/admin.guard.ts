@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
     if (this._roleauthenticationService.isAdministrator()) {
       return true;
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['']);
     }
   }
 }

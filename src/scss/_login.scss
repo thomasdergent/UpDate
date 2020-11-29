@@ -62,3 +62,9 @@
     .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
         background-color: $buttonColor !important;
     }
+
+    @media screen and (max-width: 769px) {
+        .user_card {
+            margin-top: 30%;
+        }
+      }

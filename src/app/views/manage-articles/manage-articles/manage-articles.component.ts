@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Article } from 'src/app/models/article/article.model';
 import { ArticleService } from 'src/app/services/articleService/article.service';
-import { TagService } from 'src/app/services/tagService/tag.service';
 
 @Component({
   selector: 'app-manage-articles',
@@ -12,25 +10,25 @@ import { TagService } from 'src/app/services/tagService/tag.service';
 export class ManageArticlesComponent implements OnInit {
 
   articles: Article[];
+  loaded: boolean = false;
+  spinner: boolean = true;
 
   constructor(
     private _articleService: ArticleService,
-    private _tagService: TagService,
-    private router: Router,
   ) {
-   this.getArticlesToReview();
+    this.getArticlesToReview();
   }
 
   getArticlesToReview() {
     this._articleService.getArticlesToReview().subscribe(
       result => {
-        this.articles = result;
+        this.articles = result.reverse();
+        this.spinner = false;
+        this.loaded = true;
       })
   }
 
-
   ngOnInit(): void {
-    this.getArticlesToReview();
   }
 
 }

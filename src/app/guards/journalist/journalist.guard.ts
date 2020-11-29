@@ -14,7 +14,7 @@ export class JournalistGuard implements CanActivate {
       if (this._roleauthenticationService.isJournalist()) {
         return true;
       } else {
-        this.router.navigate(['/']);
+        this.router.navigate(['']);
       }
     }
   }

@@ -10,8 +10,15 @@
 <body>
     
     <ngx-alerts></ngx-alerts>  
+
+    <div  *ngIf="spinner"> 
+        <div role="status"> 
+            <p id="loading"></p> 
+        </div> 
+    </div> 
+
     <section id="manage-journalists">
-        <div class="container">
+        <div class="container" *ngIf="loaded">
 
             <div class="section-title" data-aos="fade-left">
                 <h2>Artikels publiceren</h2>

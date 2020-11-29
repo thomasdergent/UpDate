@@ -14,7 +14,7 @@ export class Article {
         public tagID: number,
         public tag: Tag,
         public userID: number,
-        public user: User,
+        public user: CurrentUser,
         public articleStatusID: number,
         public articleStatus: Articlestatus,
         public articleID?: number,

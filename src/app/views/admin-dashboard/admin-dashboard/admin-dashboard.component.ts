@@ -7,11 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  constructor() { 
-  }
-
-  onload(){
-   window.location.reload
+  constructor() {
   }
 
   ngOnInit(): void {

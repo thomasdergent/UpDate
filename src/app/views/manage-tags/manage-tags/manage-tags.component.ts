@@ -93,7 +93,7 @@ export class ManageTagsComponent implements OnInit {
         modal.classList.remove('show')
         modal.classList.add('hidden')
 
-        this.tag=new Tag("");
+        this.tag = new Tag("");
         this.getTags();
         this.alertService.success('Categorie toegevoegd');
       }

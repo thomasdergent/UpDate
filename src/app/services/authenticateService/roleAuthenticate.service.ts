@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { getUserFromLocalStorage, User } from 'src/app/models/user/user.model';
-import decode from 'jwt-decode';
 import { CurrentUser } from 'src/app/models/user/current-user.model';
 import { UserInformationService } from '../userService/user-information.service';
 
@@ -9,22 +7,28 @@ import { UserInformationService } from '../userService/user-information.service'
 })
 export class RoleAuthenticateService {
 
-  user: User;
+  user: CurrentUser;
+  boolean: boolean = false;
 
   constructor(
     private _userInformationService: UserInformationService,
   ) {
-    this.getInfo();
+    
+   this.getInfo();
    }
 
    getInfo(){
-    if (localStorage.getItem("user") !=null){
-      this.user = getUserFromLocalStorage();
+    if (localStorage.getItem("token") !=null){
+    
+      this._userInformationService.getUserInfo((currentUser: CurrentUser) => {
+        this.user=currentUser;
+        
+      });
      }
    }
   
   isUser() {
-    if (localStorage.getItem("user") !=null){
+    if (localStorage.getItem("token")){
       const role = this.user.role;
       if (role.name == "User") {
         return true;
@@ -35,7 +39,7 @@ export class RoleAuthenticateService {
   }
 
   isJournalist() {
-    if (localStorage.getItem("user") !=null){
+    if (localStorage.getItem("token")){
     const role = this.user.role;
     if (role.name == "Journalist") {
       return true;
@@ -46,7 +50,7 @@ export class RoleAuthenticateService {
   }
 
   isAdministrator() {
-    if (localStorage.getItem("user") !=null){
+    if (localStorage.getItem("token")){
     const role = this.user.role;
     if (role.name == "Admin") {
       return true;
@@ -57,7 +61,7 @@ export class RoleAuthenticateService {
   }
 
   isLoggedIn(){
-    if (localStorage.getItem("user") !=null){
+    if (localStorage.getItem("token")){
       return true;
     } else {
       return false;
@@ -65,7 +69,7 @@ export class RoleAuthenticateService {
   }
 
   isNotLoggedIn(){
-    if (localStorage.getItem("user") ==null){
+    if (!localStorage.getItem("token")){
       return true;
     } else {
       return false;
